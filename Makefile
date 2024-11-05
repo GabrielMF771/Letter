@@ -1,29 +1,29 @@
-# Variáveis
+# Define as variáveis
 CC = gcc
-BIN = bin
-OBJ_DIR = obj
-SRC_DIR = src
-SRC = $(wildcard $(SRC_DIR)/*.c)  # Todos os arquivos .c em src
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)  # Objetos gerados na pasta obj
-CFLAGS = -Wall -I $(SRC_DIR)  # Flags de compilação
+CFLAGS = -g -Iinclude -Llib -lglfw3dll
+SRC = src/main.c lib/glad.c
+OBJ = obj/main.o obj/glad.o
+TARGET = bin/main.exe
+
+# Criação dos diretórios de saída
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+# Regra para compilar os arquivos .c em .o
+obj/%.o: src/%.c
+	@if not exist obj mkdir obj
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Regra específica para glad.c
+obj/glad.o: lib/glad.c
+	@if not exist obj mkdir obj
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Limpar arquivos temporários
+clean:
+	@if exist obj\*.o del /q obj\*.o
+	@if exist bin\main.exe del /q bin\main.exe
 
 .PHONY: all clean
-
-all: dirs game
-
-dirs:
-	mkdir $(BIN)
-	mkdir $(OBJ_DIR)
-
-game: $(OBJ)
-	$(CC) -o $(BIN)/game.exe $^
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-clean:
-	if exist $(BIN) rmdir /s /q $(BIN)
-	if exist $(OBJ_DIR) rmdir /s /q $(OBJ_DIR)
-
-run: all
-	$(BIN)/game.exe
