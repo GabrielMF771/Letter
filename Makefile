@@ -7,15 +7,20 @@ BIN_DIR = bin
 SRC = $(SRC_DIR)/main.c $(LIB_DIR)/glad.c
 OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/glad.o
 TARGET = $(BIN_DIR)/main.exe
+GLFW_DLL = $(LIB_DIR)/glfw3.dll
 
-.PHONY: all clean run libs
+.PHONY: all clean run libs copy_dll
 
-all: dirs libs
+all: dirs copy_dll libs
 
 dirs:
-	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
 	@if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
+	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
 
+copy_dll:
+	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
+	@xcopy /y $(LIB_DIR)\glfw3.dll $(BIN_DIR)\ 
+	
 libs:
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/glad.o -c $(LIB_DIR)/glad.c
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/main.o -c $(SRC_DIR)/main.c
