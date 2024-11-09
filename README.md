@@ -16,5 +16,3 @@ Para executar o jogo é necessário compilar. Para isso, basta executar os segui
 `$ make`
 
 Assim que compilado utilizando o `$ make`, o executável poderá ser encontrado em: `./bin/`.
-
-*OBS: É de extrema importância que* `glfw3.dll` *esteja na pasta raiz.*
