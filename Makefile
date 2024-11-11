@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Iinclude -Llib -lglfw3dll
+CFLAGS = -g -Iinclude -Ilib/SOIL -Llib/SOIL -Llib -lglfw3dll -lSOIL -lopengl32
 SRC_DIR = src
 LIB_DIR = lib
 OBJ_DIR = obj
@@ -11,7 +11,8 @@ GLFW_DLL = $(LIB_DIR)/glfw3.dll
 
 .PHONY: all clean run libs copy_dll
 
-all: dirs copy_dll libs
+all: clean dirs copy_dll libs 
+	@if exist $(OBJ_DIR) rmdir /s /q $(OBJ_DIR)
 
 dirs:
 	@if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
@@ -20,7 +21,7 @@ dirs:
 copy_dll:
 	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
 	@xcopy /y $(LIB_DIR)\glfw3.dll $(BIN_DIR)\ 
-	
+
 libs:
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/glad.o -c $(LIB_DIR)/glad.c
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/main.o -c $(SRC_DIR)/main.c
