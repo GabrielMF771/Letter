@@ -32,9 +32,6 @@ void initOpenGL(GLFWwindow** window) {
         fprintf(stderr, "Falha ao inicializar o GLAD\n");
         exit(EXIT_FAILURE);
     }
-
-    // Configura a visão da janela (viewport)
-    glViewport(0, 0, 800, 600);
 }
 
 // Função pra deixar tudo no centro da tela
