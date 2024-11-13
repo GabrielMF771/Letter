@@ -4,6 +4,14 @@
 #include <SOIL.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Declaração de funções
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+
 
 int main() {
     if (!glfwInit()) {
@@ -29,7 +37,12 @@ int main() {
         return -1;
     }
 
+    // Função pra deixar tudo no centro da tela
+    glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
+
     while (!glfwWindowShouldClose(window)) {
+        processInput(window);
+
         glfwPollEvents();
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -40,4 +53,20 @@ int main() {
 
     glfwTerminate();
     return 0;
+}
+
+// Função pra deixar tudo no centro da tela
+void framebuffer_size_callback(GLFWwindow* window, int width, int height){
+    glViewport(0,0,width,height);
+}
+
+// Função de carregar input
+void processInput(GLFWwindow* window){
+
+    //Botão de fechar se o "esc" for clicado
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
+
+        // Comando que a Janela deve fechar
+        glfwSetWindowShouldClose(window, 1);
+    }
 }
