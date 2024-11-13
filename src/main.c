@@ -52,7 +52,6 @@ int main() {
         glfwSwapBuffers(window);
 
         glfwSetKeyCallback(window, key_callback);
-
     }
 
     glfwTerminate();
