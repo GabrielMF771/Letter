@@ -1,14 +1,7 @@
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
-#include <SOIL.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "common.h"
+#include "screen.h"
 
 // Declaração de funções
-
 void initOpenGL(GLFWwindow** window);
 void desenhaQuadrado();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -59,32 +52,23 @@ void processInput(GLFWwindow* window){
         glfwSetWindowShouldClose(window, 1);
     }
 }
+
 // Função retorno teclas do teclado
-
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-        printf("Jogo iniciado\n");
-    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-        printf("Mostrando estatisticas\n");
-}
-
-void desenhaQuadrado() {
-    // Limpa o buffer com a cor preta
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Desenha o quadrado usando GL_QUADS
-    glBegin(GL_QUADS); 
-    glColor3f(0.0f, 1.0f, 0.0f);  // Cor verde
-    glVertex2f(-0.5f, -0.5f); // Vértice inferior esquerdo
-    glVertex2f( 0.5f, -0.5f); // Vértice inferior direito
-    glVertex2f( 0.5f,  0.5f); // Vértice superior direito
-    glVertex2f(-0.5f,  0.5f); // Vértice superior esquerdo
-    glEnd(); 
-
-    // Troca os buffers para exibir a cena
-    glfwSwapBuffers(glfwGetCurrentContext());
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (action == GLFW_PRESS) {
+        if (key == GLFW_KEY_1) {
+            if (telaAtual == MENU) {
+                telaAtual = JOGO;  // Vai para a tela de jogo
+                printf("Tela de Jogo\n");
+            }
+        }
+        if (key == GLFW_KEY_2) {
+            if (telaAtual == MENU) {
+                telaAtual = ESTATISTICAS;  // Vai para a tela de estatísticas
+                printf("Tela de Estatísticas\n");
+            }
+        }
+    }
 }
 
 int main() {
@@ -100,7 +84,14 @@ int main() {
         processInput(window);
         glfwPollEvents();
 
-        desenhaQuadrado();
+        // Desenha a tela com base no estado atual
+        if (telaAtual == MENU) {
+            desenhaMenuPrincipal();
+        } else if (telaAtual == JOGO) {
+            desenhaTelaJogo();
+        } else if (telaAtual == ESTATISTICAS) {
+            desenhaTelaEstatisticas();
+        }
 
         glfwSetKeyCallback(window, key_callback);
     }

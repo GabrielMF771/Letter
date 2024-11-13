@@ -4,8 +4,8 @@ SRC_DIR = src
 LIB_DIR = lib
 OBJ_DIR = obj
 BIN_DIR = bin
-SRC = $(SRC_DIR)/main.c $(LIB_DIR)/glad.c
-OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/glad.o
+SRC = $(wildcard $(SRC_DIR)/*.c) $(LIB_DIR)/glad.c
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 TARGET = $(BIN_DIR)/main.exe
 GLFW_DLL = $(LIB_DIR)/glfw3.dll
 
@@ -25,6 +25,7 @@ copy_dll:
 libs:
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/glad.o -c $(LIB_DIR)/glad.c
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/main.o -c $(SRC_DIR)/main.c
+	$(CC) $(CFLAGS) -o $(OBJ_DIR)/screen.o -c $(SRC_DIR)/screen.c
 	$(CC) -o $(TARGET) $(OBJ) $(CFLAGS)
 
 clean:
