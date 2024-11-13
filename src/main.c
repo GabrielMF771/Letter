@@ -9,53 +9,39 @@
 
 // Declaração de funções
 
+void initOpenGL(GLFWwindow** window);
+void desenhaQuadrado();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-int main() {
+// Função para configurar a janela e o contexto OpenGL
+void initOpenGL(GLFWwindow** window) {
+    // Inicializa o GLFW
     if (!glfwInit()) {
-        printf("Failed to initialize GLFW\n");
-        return -1;
+        fprintf(stderr, "Falha ao inicializar o GLFW\n");
+        exit(EXIT_FAILURE);
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 
-    600, "Jogo", NULL, NULL);
-    if (window == NULL) {
-        printf("Failed to create GLFW window\n");
+    // Cria a janela GLFW
+    *window = glfwCreateWindow(800, 600, "Jogo", NULL, NULL);
+    if (!*window) {
+        fprintf(stderr, "Falha ao criar a janela GLFW\n");
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
-    glfwMakeContextCurrent(window);
+    // Faz o contexto da janela atual
+    glfwMakeContextCurrent(*window);
 
+    // Inicializa o GLAD para gerenciar funções do OpenGL
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        printf("Failed to initialize GLAD\n");
-        return -1;
+        fprintf(stderr, "Falha ao inicializar o GLAD\n");
+        exit(EXIT_FAILURE);
     }
 
-    // Função pra deixar tudo no centro da tela
-    glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
-
-    while (!glfwWindowShouldClose(window)) {
-        processInput(window);
-
-        glfwPollEvents();
-
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
-
-        glfwSetKeyCallback(window, key_callback);
-    }
-
-    glfwTerminate();
-    return 0;
+    // Configura a visão da janela (viewport)
+    glViewport(0, 0, 800, 600);
 }
 
 // Função pra deixar tudo no centro da tela
@@ -73,7 +59,7 @@ void processInput(GLFWwindow* window){
         glfwSetWindowShouldClose(window, 1);
     }
 }
-//funcao retorno teclas do teclado
+// Função retorno teclas do teclado
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -81,4 +67,45 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         printf("Jogo iniciado\n");
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
         printf("Mostrando estatisticas\n");
+}
+
+void desenhaQuadrado() {
+    // Limpa o buffer com a cor preta
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Desenha o quadrado usando GL_QUADS
+    glBegin(GL_QUADS); 
+    glColor3f(0.0f, 1.0f, 0.0f);  // Cor verde
+    glVertex2f(-0.5f, -0.5f); // Vértice inferior esquerdo
+    glVertex2f( 0.5f, -0.5f); // Vértice inferior direito
+    glVertex2f( 0.5f,  0.5f); // Vértice superior direito
+    glVertex2f(-0.5f,  0.5f); // Vértice superior esquerdo
+    glEnd(); 
+
+    // Troca os buffers para exibir a cena
+    glfwSwapBuffers(glfwGetCurrentContext());
+}
+
+int main() {
+    GLFWwindow* window;
+
+    // Inicializa OpenGL
+    initOpenGL(&window);
+
+    // Função pra deixar tudo no centro da tela
+    glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
+
+    while (!glfwWindowShouldClose(window)) {
+        processInput(window);
+        glfwPollEvents();
+
+        desenhaQuadrado();
+
+        glfwSetKeyCallback(window, key_callback);
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    return 0;
 }
