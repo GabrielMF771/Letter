@@ -9,7 +9,7 @@ OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/glad.o
 TARGET = $(BIN_DIR)/main.exe
 GLFW_DLL = $(LIB_DIR)/glfw3.dll
 
-.PHONY: all clean run libs copy_dll
+.PHONY: all clean run libs copy_dlls
 
 all: clean dirs copy_dll libs 
 	@if exist $(OBJ_DIR) rmdir /s /q $(OBJ_DIR)
