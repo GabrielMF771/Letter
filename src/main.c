@@ -3,10 +3,12 @@
 
 // Declaração de funções
 void initOpenGL(GLFWwindow** window);
-void desenhaQuadrado();
+void desenhaQuadrado(GLFWwindow** window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+const GLuint WIDTH = 900, HEIGHT = 900;
 
 // Função para configurar a janela e o contexto OpenGL
 void initOpenGL(GLFWwindow** window) {
@@ -17,7 +19,7 @@ void initOpenGL(GLFWwindow** window) {
     }
 
     // Cria a janela GLFW
-    *window = glfwCreateWindow(800, 600, "Jogo", NULL, NULL);
+    *window = glfwCreateWindow(WIDTH, HEIGHT, "Letter", NULL, NULL);
     if (!*window) {
         fprintf(stderr, "Falha ao criar a janela GLFW\n");
         glfwTerminate();
@@ -27,11 +29,17 @@ void initOpenGL(GLFWwindow** window) {
     // Faz o contexto da janela atual
     glfwMakeContextCurrent(*window);
 
+    // Define limites fixos para o tamanho da janela (largura, altura mínima e máxima)
+    glfwSetWindowSizeLimits(*window, WIDTH, HEIGHT, WIDTH, HEIGHT);
+
     // Inicializa o GLAD para gerenciar funções do OpenGL
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         fprintf(stderr, "Falha ao inicializar o GLAD\n");
         exit(EXIT_FAILURE);
     }
+
+    glEnable(GL_TEXTURE_2D);
+    glViewport(0, 0, WIDTH, HEIGHT);
 }
 
 // Função pra deixar tudo no centro da tela
@@ -56,13 +64,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         if (key == GLFW_KEY_1) {
             if (telaAtual == MENU) {
                 telaAtual = JOGO;  // Vai para a tela de jogo
-                printf("Tela de Jogo\n");
+                desenhaTelaJogo(window);
             }
         }
         if (key == GLFW_KEY_2) {
             if (telaAtual == MENU) {
                 telaAtual = ESTATISTICAS;  // Vai para a tela de estatísticas
-                printf("Tela de Estatísticas\n");
+                desenhaTelaEstatisticas(window);
             }
         }
     }
@@ -83,15 +91,18 @@ int main() {
 
         // Desenha a tela com base no estado atual
         if (telaAtual == MENU) {
-            desenhaMenuPrincipal();
+            desenhaMenuPrincipal(window);
         } else if (telaAtual == JOGO) {
-            desenhaTelaJogo();
+            desenhaTelaJogo(window);
         } else if (telaAtual == ESTATISTICAS) {
-            desenhaTelaEstatisticas();
+            desenhaTelaEstatisticas(window);
         }
 
         glfwSetKeyCallback(window, key_callback);
     }
+
+    glDeleteTextures(1, &startButtonTexture);
+    glDeleteTextures(1, &statsButtonTexture);
 
     glfwDestroyWindow(window);
     glfwTerminate();
