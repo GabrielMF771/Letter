@@ -38,18 +38,9 @@ int isButtonClicked(Button button, double mouseX, double mouseY, int windowWidth
 
     // Verifica se o clique está dentro da área do botão
     if (xNorm >= left && xNorm <= right && yNorm >= bottom && yNorm <= top) {
-        return 1;  // Clique dentro do botão
+        return 1;
     }
-    return 0;  // Clique fora do botão
-}
-
-// Função para mudar o cursor dependendo da posição do mouse
-void mudaCursor(GLFWwindow* window, Button button, double mouseX, double mouseY, int windowWidth, int windowHeight) {
-    if (isButtonClicked(button, mouseX, mouseY, windowWidth, windowHeight)) {
-        glfwSetCursor(window, glfwCreateStandardCursor(GLFW_HAND_CURSOR)); // Cursor de mão
-    } else {
-        glfwSetCursor(window, glfwCreateStandardCursor(GLFW_ARROW_CURSOR)); // Cursor padrão
-    }
+    return 0;
 }
 
 void DrawButton(GLuint texture, float x, float y, float width, float height) {
@@ -76,25 +67,14 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Criar os botões
-    Button tittleButton = {TituloTexture, 0.0f, 0.3f, 1.0f, 0.42f}; // Título
-    Button startButton = {startButtonTexture, 0.0f, -0.2f, 0.6f, 0.22f}; // Botão "Iniciar Jogo"
-    Button statsButton = {statsButtonTexture, 0.0f, -0.45f, 0.6f, 0.22f}; // Botão "Estatísticas"
+    Button tittleButton = {TituloTexture, 0.0f, 0.3f, 1.0f, 0.42f};
+    Button startButton = {startButtonTexture, 0.0f, -0.2f, 0.6f, 0.22f};
+    Button statsButton = {statsButtonTexture, 0.0f, -0.45f, 0.6f, 0.22f};
 
     // Desenhar os botões
     DrawButton(tittleButton.texture, tittleButton.xPos - tittleButton.width / 2, tittleButton.yPos - tittleButton.height / 2, tittleButton.width, tittleButton.height);
-    
     DrawButton(startButton.texture, startButton.xPos - startButton.width / 2, startButton.yPos - startButton.height / 2, startButton.width, startButton.height);
-    
     DrawButton(statsButton.texture, statsButton.xPos - statsButton.width / 2, statsButton.yPos - statsButton.height / 2, statsButton.width, statsButton.height);
-
-    // Pegar a posição do mouse
-    double xpos, ypos;
-    glfwGetCursorPos(window, &xpos, &ypos);  // Posição do mouse na janela
-
-    // Mudar o cursor para mão ou seta dependendo de onde o mouse está
-    mudaCursor(window, tittleButton, xpos, ypos, WIDTH, HEIGHT);
-    mudaCursor(window, startButton, xpos, ypos, WIDTH, HEIGHT);
-    mudaCursor(window, statsButton, xpos, ypos, WIDTH, HEIGHT);
 
     // Verificar se algum botão foi clicado
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {

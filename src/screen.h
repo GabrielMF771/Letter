@@ -3,25 +3,27 @@
 
 // Definição do enum para controlar o estado do programa
 typedef enum {
-    MENU,         // Tela principal do menu
-    JOGO,         // Tela do jogo
-    ESTATISTICAS  // Tela de estatísticas
+    MENU, // Tela principal do menu
+    JOGO, // Tela do jogo
+    ESTATISTICAS // Tela de estatísticas
 } Tela;
 
 // Struct dos botões do menu
 typedef struct Button {
-    GLuint texture;  // A textura do botão
-    float xPos, yPos;  // Posição do centro do botão
-    float width, height;  // Tamanho do botão
+    GLuint texture; // A textura do botão
+    float xPos, yPos; // Posição do centro do botão
+    float width, height; // Tamanho do botão
 } Button;
 
 // Variável global para armazenar o estado atual da tela
 extern Tela telaAtual;
 
+// Texturas
 GLuint startButtonTexture;
 GLuint statsButtonTexture;
 GLuint TituloTexture;
 
+// Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
 extern const GLuint HEIGHT;
 
