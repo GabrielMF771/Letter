@@ -6,7 +6,7 @@ OBJ_DIR = obj
 BIN_DIR = bin
 SRC = $(wildcard $(SRC_DIR)/*.c) $(LIB_DIR)/glad.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-TARGET = $(BIN_DIR)/main.exe
+TARGET = $(BIN_DIR)/Letter.exe
 GLFW_DLL = $(LIB_DIR)/glfw3.dll
 
 .PHONY: all clean run libs copy_dlls
