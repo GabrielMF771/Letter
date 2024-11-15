@@ -24,6 +24,7 @@ copy_dll:
 
 libs:
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/glad.o -c $(LIB_DIR)/glad.c
+	$(CC) $(CFLAGS) -o $(OBJ_DIR)/validation.o -c $(SRC_DIR)/validation.c
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/screen.o -c $(SRC_DIR)/screen.c
 	$(CC) $(CFLAGS) -o $(OBJ_DIR)/main.o -c $(SRC_DIR)/main.c
 	$(CC) -o $(TARGET) $(OBJ) $(CFLAGS)

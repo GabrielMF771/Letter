@@ -1,5 +1,6 @@
 #include "common.h"
 #include "screen.h"
+#include "validation.h"
 
 // Declaração de funções
 void initOpenGL(GLFWwindow** window);
