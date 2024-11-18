@@ -1,5 +1,6 @@
 #include "common.h"
 #include "level.h"
+#include "score.h"
 
 int fase = 1;
 
@@ -11,6 +12,7 @@ char escolhida[6];
 
 //recebe o numero da fase
 char gerarPalavraFases(int fase){
+
     FILE *file;
     //escolhe o txt de acordo com a fase
     switch(fase){

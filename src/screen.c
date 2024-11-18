@@ -6,6 +6,7 @@
 #include "common.h"
 #include "screen.h"
 #include "level.h"
+#include "score.h"
 
 Tela telaAtual = MENU;
 
@@ -128,7 +129,6 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
         
     }
     
-
     // Verificar se algum botão foi clicado
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         double xpos, ypos;
@@ -139,6 +139,9 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             printf("Estatisticas pressionado!\n");
             telaAtual = ESTATISTICAS;
             // Lógica para exibir as estatísticas
+
+            printf("\nTempo decorrido: %02dh%02dm%02ds\n", horas, minutos, segundos); // DEBUG
+            
         }
         
         // Verificar se o clique está no botão "Iniciar Jogo"
@@ -146,7 +149,11 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             printf("Iniciar Jogo pressionado!\n");
             if (fase != 6){
                 // Lógica para iniciar o jogo
-                
+
+                captura_tempo_inicio(&horas, &minutos, &segundos);
+                printf("Tempo contando\n");
+
+                captura_tempo_inicio(&horas, &minutos, &segundos);
                 gerarPalavraFases(fase);
                 gerarLibrary();
                 printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
@@ -170,6 +177,8 @@ void desenhaTelaJogo(GLFWwindow* window) {
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+
+
     glfwSwapBuffers(glfwGetCurrentContext());
 }
 
@@ -177,6 +186,8 @@ void desenhaTelaJogo(GLFWwindow* window) {
 void desenhaTelaEstatisticas(GLFWwindow* window) {
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+
 
     glfwSwapBuffers(glfwGetCurrentContext());
 }
@@ -186,6 +197,10 @@ void atualizaTela(GLFWwindow* window) {
     // Desenha a tela conforme o estado atual
     switch (telaAtual) {
         case MENU:
+            if (fase >= 6) {
+                captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
+                printf("Tempo parou de contar\n");
+            }
             desenhaMenuPrincipal(window);
             break;
         case JOGO:

@@ -6,6 +6,7 @@
 #include "common.h"
 #include "screen.h"
 #include "level.h"
+#include "score.h"
 
 // Declaração de funções
 void initOpenGL(GLFWwindow** window);
