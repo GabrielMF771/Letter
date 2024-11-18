@@ -19,26 +19,26 @@ Certifique-se de ter o compilador GCC e o `make` instalados no ambiente.
 
 1. Clone o repositório:
 
-```bash
-$ git clone https://github.com/GabrielMF771/Letter
+```
+git clone https://github.com/GabrielMF771/Letter
 ```
 
 2. Acesse o diretório do projeto:
 
-```bash
-$ cd Jogo
+```
+cd Jogo
 ```
 
 3. Compile o jogo utilizando o `make`:
 
-```bash
-$ make
+```
+make
 ```
 
 4. Após a compilação, o executável será gerado no diretório `./bin/:`
 
-```bash
-$ ./bin/Letter.exe
+```
+./bin/Letter.exe
 ```
 
 Divirta-se tentando adivinhar as palavras e desafie seus amigos!
