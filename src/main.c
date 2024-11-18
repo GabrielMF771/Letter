@@ -71,10 +71,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         if (key == GLFW_KEY_LEFT_BRACKET) {
             if(fase >= 6){
                 fase = 1;
-                printf("Fase alterada para 1\n");
+                printf("\nFase alterada para 1\n");
             } else {
                 fase = 6;
-                printf("Fase alterada para 6\n");
+                printf("\nFase alterada para 6\n");
             }
         }
         if (key == GLFW_KEY_ESCAPE){

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "level.h"
 
-int fase = 2;
+int fase = 1;
 
 //vetor q vai armazenar todas as palavras em ordem
 char plvrDaFase[9][TAMANHO_PALAVRA];
@@ -15,22 +15,25 @@ char gerarPalavraFases(int fase){
     //escolhe o txt de acordo com a fase
     switch(fase){
     case 1:
-        file = fopen("assets/levels/primeiroNivel.txt","r");
+        file = fopen("assets/levels/Nivel1.txt","r");
         break;
     case 2:
-        file = fopen("assets/levels/segundoNivel.txt","r");
+        file = fopen("assets/levels/Nivel2.txt","r");
         break;
     case 3:
-        file = fopen("assets/levels/terceiroNivel.txt","r");
+        file = fopen("assets/levels/Nivel3.txt","r");
         break;
     case 4:
-        file = fopen("assets/levels/quartoNivel.txt","r");
+        file = fopen("assets/levels/Nivel4.txt","r");
         break;
     case 5:
-        file = fopen("assets/levels/quintoNivel.txt","r");
+        file = fopen("assets/levels/Nivel5.txt","r");
+        break;
+    case 6:
+        file = fopen("assets/levels/Nivel6.txt","r");
         break;
     default:
-        file = fopen("assets/levels/primeiroNivel.txt","r");
+        file = fopen("assets/levels/Nivel1.txt","r");
         break;
     }
 

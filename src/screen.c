@@ -107,6 +107,10 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             printf("Modo Infinito pressionado!\n");
             telaAtual = JOGO;
             // Lógica para iniciar o jogo infinito
+
+                gerarPalavraFases(fase);
+                gerarLibrary();
+                printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
             }
         }
         
@@ -128,11 +132,18 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
         // Verificar se o clique está no botão "Iniciar Jogo"
         if (isButtonClicked(startButton, xpos, ypos, WIDTH, HEIGHT)) {
             printf("Iniciar Jogo pressionado!\n");
-            telaAtual = JOGO;
-            // Lógica para iniciar o jogo
-            gerarPalavraFases(fase);
-            gerarLibrary();
-            printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+            if (fase != 6){
+                // Lógica para iniciar o jogo
+                
+                gerarPalavraFases(fase);
+                gerarLibrary();
+                printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+                telaAtual = JOGO;
+            } else {
+                printf("Utilize o modo infinito!\n");
+                telaAtual = MENU;
+            }
         }
     }
 
