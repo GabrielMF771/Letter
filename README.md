@@ -1,4 +1,4 @@
-# (Nome do Jogo)
+# Letter
 Jogo em 2D feito inteiramente utilizando a linguagem C e a biblioteca OpenGL para a matéria de Algoritmos e Programação Estruturada.
 
 ## Funcionalidades:
