@@ -20,7 +20,7 @@ Certifique-se de ter o compilador GCC e o `make` instalados no ambiente.
 1. Clone o repositório:
 
 ```bash
-$ git clone https://github.com/GabrielMF771/Jogo
+$ git clone https://github.com/GabrielMF771/Letter
 ```
 
 2. Acesse o diretório do projeto:
