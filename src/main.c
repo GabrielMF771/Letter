@@ -69,7 +69,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 desenhaTelaEstatisticas(window);
             }
         }
-        if (key == GLFW_KEY_LEFT_BRACKET) {
+        if (key == GLFW_KEY_P) {
             if(fase >= 6){
                 fase = 1;
                 printf("\nFase alterada para 1\n");
