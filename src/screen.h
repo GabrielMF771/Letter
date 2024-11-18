@@ -19,10 +19,10 @@ typedef struct Button {
 extern Tela telaAtual;
 
 // Texturas
-GLuint startButtonTexture;
-GLuint statsButtonTexture;
-GLuint infiniteButtonTexture;
-GLuint TituloTexture;
+extern GLuint startButtonTexture;
+extern GLuint statsButtonTexture;
+extern GLuint infiniteButtonTexture;
+extern GLuint TituloTexture;
 
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
@@ -31,6 +31,8 @@ extern const GLuint HEIGHT;
 // Funções dos botões
 int isButtonClicked(Button button, double mouseX, double mouseY, int windowWidth, int windowHeight);
 void DeleteButtonTexture(GLuint* texture);
+void carregaTexturasMenu();
+void liberaTexturasMenu();
 void DrawButton(GLuint texture, float x, float y, float width, float height);
 
 // Declaração das funções de desenho das telas

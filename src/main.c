@@ -11,8 +11,8 @@
 void initOpenGL(GLFWwindow** window);
 void desenhaQuadrado(GLFWwindow** window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void liberaRecursos();
 
 const GLuint WIDTH = 900, HEIGHT = 900;
 
@@ -89,6 +89,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+void liberaRecursos(){
+    liberaTexturasMenu();
+}
+
 int main() {
     GLFWwindow* window;
 
@@ -97,6 +101,8 @@ int main() {
 
     // Função pra deixar tudo no centro da tela
     glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
+
+    carregaTexturasMenu();
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -113,8 +119,7 @@ int main() {
         glfwSetKeyCallback(window, key_callback);
     }
 
-    glDeleteTextures(1, &startButtonTexture);
-    glDeleteTextures(1, &statsButtonTexture);
+    liberaRecursos();
 
     glfwDestroyWindow(window);
     glfwTerminate();

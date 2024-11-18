@@ -9,6 +9,11 @@
 
 Tela telaAtual = MENU;
 
+GLuint startButtonTexture = 0;
+GLuint statsButtonTexture = 0;
+GLuint infiniteButtonTexture = 0;
+GLuint TituloTexture = 0;
+
 GLuint LoadTexture(const char* filePath) {
     GLuint texture = SOIL_load_OGL_texture(
         filePath,
@@ -62,20 +67,29 @@ void DrawButton(GLuint texture, float x, float y, float width, float height) {
 
 void DeleteButtonTexture(GLuint* texture) {
     if (texture && *texture != 0) {
-        glDeleteTextures(1, texture);  // Libera o ID da textura
-        *texture = 0;                 // Marca como não utilizada
+        glDeleteTextures(1, texture); // Libera o ID da textura
+        *texture = 0; // Marca como não utilizada
     }
+}
+
+void carregaTexturasMenu() {
+    statsButtonTexture = LoadTexture("assets/main-menu/EstatisticasBotao.png");
+    startButtonTexture = LoadTexture("assets/main-menu/IniciarBotao.png");
+    infiniteButtonTexture = LoadTexture("assets/main-menu/InfinitoBotao.png");
+    TituloTexture = LoadTexture("assets/main-menu/Titulo.png");
+}
+
+void liberaTexturasMenu() {
+    DeleteButtonTexture(&statsButtonTexture);
+    DeleteButtonTexture(&startButtonTexture);
+    DeleteButtonTexture(&infiniteButtonTexture);
+    DeleteButtonTexture(&TituloTexture);
 }
 
 // Função para desenhar o menu principal
 void desenhaMenuPrincipal(GLFWwindow* window) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    statsButtonTexture = LoadTexture("assets/main-menu/EstatisticasBotao.png");
-    startButtonTexture = LoadTexture("assets/main-menu/IniciarBotao.png");
-    infiniteButtonTexture = LoadTexture("assets/main-menu/InfinitoBotao.png");
-    TituloTexture = LoadTexture("assets/main-menu/Titulo.png");
 
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -88,9 +102,7 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
 
     // Desenhar os botões
     DrawButton(tittleButton.texture, tittleButton.xPos - tittleButton.width / 2, tittleButton.yPos - tittleButton.height / 2, tittleButton.width, tittleButton.height);
-
     DrawButton(startButton.texture, startButton.xPos - startButton.width / 2, startButton.yPos - startButton.height / 2, startButton.width, startButton.height);
-
     DrawButton(statsButton.texture, statsButton.xPos - statsButton.width / 2, statsButton.yPos - statsButton.height / 2, statsButton.width, statsButton.height);
 
     if (fase >= 6){
