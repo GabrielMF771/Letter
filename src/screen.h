@@ -21,6 +21,7 @@ extern Tela telaAtual;
 // Texturas
 GLuint startButtonTexture;
 GLuint statsButtonTexture;
+GLuint infiniteButtonTexture;
 GLuint TituloTexture;
 
 // Variáveis externas para o tamanho da tela
@@ -29,6 +30,7 @@ extern const GLuint HEIGHT;
 
 // Funções dos botões
 int isButtonClicked(Button button, double mouseX, double mouseY, int windowWidth, int windowHeight);
+void DeleteButtonTexture(GLuint* texture);
 void DrawButton(GLuint texture, float x, float y, float width, float height);
 
 // Declaração das funções de desenho das telas

@@ -1,5 +1,11 @@
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include <SOIL.h>
+
 #include "common.h"
 #include "screen.h"
+#include "level.h"
 
 Tela telaAtual = MENU;
 
@@ -54,6 +60,13 @@ void DrawButton(GLuint texture, float x, float y, float width, float height) {
     glEnd();
 }
 
+void DeleteButtonTexture(GLuint* texture) {
+    if (texture && *texture != 0) {
+        glDeleteTextures(1, texture);  // Libera o ID da textura
+        *texture = 0;                 // Marca como não utilizada
+    }
+}
+
 // Função para desenhar o menu principal
 void desenhaMenuPrincipal(GLFWwindow* window) {
     glEnable(GL_BLEND);
@@ -61,6 +74,7 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
 
     statsButtonTexture = LoadTexture("assets/main-menu/EstatisticasBotao.png");
     startButtonTexture = LoadTexture("assets/main-menu/IniciarBotao.png");
+    infiniteButtonTexture = LoadTexture("assets/main-menu/InfinitoBotao.png");
     TituloTexture = LoadTexture("assets/main-menu/Titulo.png");
 
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
@@ -70,11 +84,34 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
     Button tittleButton = {TituloTexture, 0.0f, 0.3f, 1.0f, 0.42f};
     Button startButton = {startButtonTexture, 0.0f, -0.2f, 0.6f, 0.22f};
     Button statsButton = {statsButtonTexture, 0.0f, -0.45f, 0.6f, 0.22f};
+    
 
     // Desenhar os botões
     DrawButton(tittleButton.texture, tittleButton.xPos - tittleButton.width / 2, tittleButton.yPos - tittleButton.height / 2, tittleButton.width, tittleButton.height);
+
     DrawButton(startButton.texture, startButton.xPos - startButton.width / 2, startButton.yPos - startButton.height / 2, startButton.width, startButton.height);
+
     DrawButton(statsButton.texture, statsButton.xPos - statsButton.width / 2, statsButton.yPos - statsButton.height / 2, statsButton.width, statsButton.height);
+
+    if (fase >= 6){
+        Button infiniteButton = {infiniteButtonTexture, 0.0f, -0.70f, 0.6f, 0.22f};
+
+        DrawButton(infiniteButton.texture, infiniteButton.xPos - infiniteButton.width / 2, infiniteButton.yPos - infiniteButton.height / 2, infiniteButton.width, infiniteButton.height);
+
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+
+            // Verificar se o clique está no botão "Modo Infinito"
+            if (isButtonClicked(infiniteButton, xpos, ypos, WIDTH, HEIGHT)) {
+            printf("Modo Infinito pressionado!\n");
+            telaAtual = JOGO;
+            // Lógica para iniciar o jogo infinito
+            }
+        }
+        
+    }
+    
 
     // Verificar se algum botão foi clicado
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
@@ -83,7 +120,7 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
 
         // Verificar se o clique está no botão "Estatísticas"
         if (isButtonClicked(statsButton, xpos, ypos, WIDTH, HEIGHT)) {
-            printf("Estatísticas pressionado!\n");
+            printf("Estatisticas pressionado!\n");
             telaAtual = ESTATISTICAS;
             // Lógica para exibir as estatísticas
         }
@@ -93,6 +130,9 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             printf("Iniciar Jogo pressionado!\n");
             telaAtual = JOGO;
             // Lógica para iniciar o jogo
+            gerarPalavraFases(fase);
+            gerarLibrary();
+            printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
         }
     }
 

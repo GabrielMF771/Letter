@@ -1,6 +1,11 @@
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include <SOIL.h>
+
 #include "common.h"
 #include "screen.h"
-#include "validation.h"
+#include "level.h"
 
 // Declaração de funções
 void initOpenGL(GLFWwindow** window);
@@ -48,17 +53,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);
 }
 
-// Função de carregar input
-void processInput(GLFWwindow* window){
-
-    //Botão de fechar se o "esc" for clicado
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
-
-        // Comando que a Janela deve fechar
-        glfwSetWindowShouldClose(window, 1);
-    }
-}
-
 // Função retorno teclas do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) {
@@ -74,6 +68,24 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 desenhaTelaEstatisticas(window);
             }
         }
+        if (key == GLFW_KEY_LEFT_BRACKET) {
+            if(fase >= 6){
+                fase = 1;
+                printf("Fase alterada para 1\n");
+            } else {
+                fase = 6;
+                printf("Fase alterada para 6\n");
+            }
+        }
+        if (key == GLFW_KEY_ESCAPE){
+            if(telaAtual != MENU) {
+                telaAtual = MENU;  // Vai para a tela de menu
+                atualizaTela(window);
+                printf("Menu Principal\n");
+            } else {
+                glfwSetWindowShouldClose(window, 1);
+            }
+        }
     }
 }
 
@@ -87,7 +99,6 @@ int main() {
     glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
 
     while (!glfwWindowShouldClose(window)) {
-        processInput(window);
         glfwPollEvents();
 
         // Desenha a tela com base no estado atual
