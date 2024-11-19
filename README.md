@@ -26,7 +26,7 @@ git clone https://github.com/GabrielMF771/Letter
 2. Acesse o diretório do projeto:
 
 ```
-cd Jogo
+cd Letter
 ```
 
 3. Compile o jogo utilizando o `make`:
@@ -41,4 +41,12 @@ make
 ./bin/Letter.exe
 ```
 
-Divirta-se tentando adivinhar as palavras e desafie seus amigos!
+--- 
+
+Ou simplesmente:
+
+```
+make run
+```
+
+O programa irá ser compilado e executado automáticamente.
