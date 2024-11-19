@@ -149,14 +149,14 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             printf("Iniciar Jogo pressionado!\n");
             if (fase != 6){
                 // Lógica para iniciar o jogo
-
-                captura_tempo_inicio(&horas, &minutos, &segundos);
                 printf("Tempo contando\n");
-
                 captura_tempo_inicio(&horas, &minutos, &segundos);
+
                 gerarPalavraFases(fase);
                 gerarLibrary();
                 printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+                
 
                 telaAtual = JOGO;
             } else {

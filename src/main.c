@@ -17,6 +17,9 @@ void liberaRecursos();
 
 const GLuint WIDTH = 900, HEIGHT = 900;
 
+pilhaLetra* pilha;
+char *string;
+
 // Função para configurar a janela e o contexto OpenGL
 void initOpenGL(GLFWwindow** window) {
     // Inicializa o GLFW
@@ -57,41 +60,78 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 // Função retorno teclas do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) {
-        if (key == GLFW_KEY_1) {
-            if (telaAtual == MENU) {
-                telaAtual = JOGO;  // Vai para a tela de jogo
-                desenhaTelaJogo(window);
+        switch (key) {
+            case GLFW_KEY_1:
+                if (telaAtual == MENU) {
+                    telaAtual = JOGO;  // Vai para a tela de jogo
+                    desenhaTelaJogo(window);
+                }
+                break;
+
+            case GLFW_KEY_2:
+                if (telaAtual == MENU) {
+                    telaAtual = ESTATISTICAS;  // Vai para a tela de estatísticas
+                    desenhaTelaEstatisticas(window);
+                }
+                break;
+
+            case GLFW_KEY_UP:
+                fase = (fase >= 6) ? 1 : 6;
+                printf("\nFase alterada para %d\n", fase);
+                break;
+
+            case GLFW_KEY_ESCAPE:
+                if (telaAtual != MENU) {
+                    telaAtual = MENU;  // Vai para a tela de menu
+                    atualizaTela(window);
+                    printf("Menu Principal\n");
+                } else {
+                    glfwSetWindowShouldClose(window, 1);
+                }
+                break;
+
+            case GLFW_KEY_ENTER:
+            if (telaAtual == JOGO) {
+                string = pilhaParaString(pilha);
+                printf("\nPilha convertida para string: %s\n", string);
+
+                int resultado = buscarNaLibrary(string,987,0,0);
+                if(resultado == 1)
+                printf("Palavra encontrada\n\n");
+                else
+                printf("Palavra nao encontrada\n\n");
+
+                limparPilha(pilha);
+
+                break;
             }
-        }
-        if (key == GLFW_KEY_2) {
-            if (telaAtual == MENU) {
-                telaAtual = ESTATISTICAS;  // Vai para a tela de estatísticas
-                desenhaTelaEstatisticas(window);
-            }
-        }
-        if (key == GLFW_KEY_P) {
-            if(fase >= 6){
-                fase = 1;
-                printf("\nFase alterada para 1\n");
-            } else {
-                fase = 6;
-                printf("\nFase alterada para 6\n");
-            }
-        }
-        if (key == GLFW_KEY_ESCAPE){
-            if(telaAtual != MENU) {
-                telaAtual = MENU;  // Vai para a tela de menu
-                atualizaTela(window);
-                printf("Menu Principal\n");
-            } else {
-                glfwSetWindowShouldClose(window, 1);
-            }
+
+            case GLFW_KEY_BACKSPACE:
+                if (telaAtual == JOGO) {
+                    if(isEmpty(pilha)){
+                        break;
+                    }
+                    pop(pilha);  // Remove o elemento do topo da pilha
+                    mostrarPilha(pilha);
+                }
+                break;
+
+            default:
+                // Verifica se a tecla é uma letra (GLFW_KEY_A até GLFW_KEY_Z)
+                if (key >= GLFW_KEY_A && key <= GLFW_KEY_Z && telaAtual == JOGO) {
+                    // Converte a tecla para minúscula
+                    char letra = tolower('A' + (key - GLFW_KEY_A));
+                    // Adiciona a letra na pilha
+                    push(pilha, letra);
+                }
+                break;
         }
     }
 }
 
 void liberaRecursos(){
     liberaTexturasMenu();
+    free(pilha);
 }
 
 int main() {
@@ -104,6 +144,7 @@ int main() {
     glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
 
     carregaTexturasMenu();
+    pilha = criarpilha();
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

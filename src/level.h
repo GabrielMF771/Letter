@@ -9,4 +9,27 @@ char gerarPalavraFases(int fase);
 void gerarLibrary();
 int buscarNaLibrary(char palavrateste[], int final, int meio, int inicio);
 
+// Pilha
+
+//Cria a estrutura do nó
+typedef struct slot{
+    char letra;
+    struct slot *proximo;
+}slot;
+
+//Cria a estrutura da pilha
+typedef struct{
+    slot *topo;
+}pilhaLetra;
+
+// Declarações da pilha
+int isEmpty(pilhaLetra *pilha);
+pilhaLetra *criarpilha();
+slot *criarNo(char letra);
+void mostrarPilha(pilhaLetra *pilha);
+void push(pilhaLetra *pilha, char letra);
+void pop(pilhaLetra *pilha);
+char* pilhaParaString(pilhaLetra *pilha);
+void limparPilha(pilhaLetra *pilha);
+
 #endif
