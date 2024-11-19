@@ -1,5 +1,5 @@
 # Letter
-**Letter** é um jogo de adivinhação de palavras, inspirado no popular <a>[Termo](https://term.ooo)</a>. O objetivo é acertar a palavra secreta em um número limitado de tentativas, recebendo dicas visuais para guiar suas escolhas.
+*Letter* é um jogo de adivinhação de palavras, inspirado no popular <a>[Termo](https://term.ooo)</a>. O objetivo é acertar a palavra secreta em um número limitado de tentativas, recebendo dicas visuais para guiar suas escolhas.
 
 Projeto feito inteiramente utilizando a linguagem C e a biblioteca OpenGL para a matéria de Algoritmos e Programação Estruturada.
 
@@ -13,7 +13,7 @@ Projeto feito inteiramente utilizando a linguagem C e a biblioteca OpenGL para a
 ### Windows
 
 #### Pré-Requisitos
-Certifique-se de ter o compilador GCC e o `make` instalados no ambiente.
+Certifique-se de ter o compilador *GCC* e o *make* instalados no ambiente.
 
 #### Instruções
 
