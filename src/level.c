@@ -303,7 +303,7 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
     printf("\nPilha convertida para string: %s\n", string);
 
     // Verifica se a palavra está na biblioteca
-    int resultado = buscarNaLibrary(string, 1004, 0, 0);
+    int resultado = buscarNaLibrary(string, 1073, 0, 0);
     if (resultado == 1) {
         printf("Palavra encontrada\n\n");
 
