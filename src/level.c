@@ -69,7 +69,7 @@ char gerarPalavraFases(int fase){
 
 }
 
-char library[1004][TAMANHO_PALAVRA];
+char library[1073][TAMANHO_PALAVRA];
 char aux[MAX_PALAVRAS][TAMANHO_PALAVRA];
 
 void gerarLibrary() {
