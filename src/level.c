@@ -69,7 +69,7 @@ char gerarPalavraFases(int fase){
 
 }
 
-char library[988][TAMANHO_PALAVRA];
+char library[1004][TAMANHO_PALAVRA];
 char aux[MAX_PALAVRAS][TAMANHO_PALAVRA];
 
 void gerarLibrary() {
@@ -303,7 +303,7 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
     printf("\nPilha convertida para string: %s\n", string);
 
     // Verifica se a palavra está na biblioteca
-    int resultado = buscarNaLibrary(string, 987, 0, 0);
+    int resultado = buscarNaLibrary(string, 1004, 0, 0);
     if (resultado == 1) {
         printf("Palavra encontrada\n\n");
 

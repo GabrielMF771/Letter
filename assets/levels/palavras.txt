@@ -101,6 +101,7 @@ avido
 aviso
 axial
 axila
+bagre
 baixa
 baixo
 banal
@@ -126,6 +127,7 @@ bocal
 bolsa
 bolso
 bonus
+borra
 botar
 brabo
 brado
@@ -194,6 +196,7 @@ chefe
 cheia
 cheio
 choca
+chove
 chula
 chulo
 chuva
@@ -211,6 +214,7 @@ claro
 clava
 clero
 clima
+cobre
 cocho
 coesa
 coeso
@@ -382,12 +386,14 @@ fruto
 fugaz
 fugir
 fugiu
+funde
 fundo
 furor
 fusao
 futil
 gabar
 garbo
+gatos
 gemer
 genio
 genro
@@ -728,6 +734,7 @@ quica
 quota
 racio
 radio
+raios
 raiva
 ranco
 rapaz
@@ -802,6 +809,7 @@ selar
 senao
 senda
 sendo
+senha
 senil
 senso
 sente
@@ -846,6 +854,7 @@ surja
 surto
 sutil
 tacha
+tacos
 tange
 tanto
 tarde
@@ -885,6 +894,8 @@ torna
 torpe
 torso
 tosco
+tosse
+touro
 traga
 trago
 traje
@@ -954,12 +965,14 @@ vetor
 vezes
 vicio
 video
+vidro
 viger
 vigia
 vigor
 vilao
 vimos
 vinha
+vinho
 viram
 virao
 virar
@@ -984,5 +997,8 @@ xampu
 xeque
 xibiu
 xucro
+zebra
 zelar
+zelar
+ziper
 zumbi
