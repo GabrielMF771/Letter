@@ -252,3 +252,43 @@ void limparPilha(pilhaLetra *pilha) {
 
     pilha->topo = NULL;
 }
+
+// Teste das palavras
+
+// 0 = VERMELHO
+//1 = AMARELO
+//2 = VERDE
+
+void testeDeLetras(char palavra_teste[], char escolhida[], char ocorrencias[]) {
+    // Inicializa ocorrências como "00000"
+    for (int i = 0; i < 5; i++) {
+        ocorrencias[i] = '0';
+    }
+    ocorrencias[5] = '\0';
+
+    // Aloca os verdes
+    for (int i = 0; i < 5; i++) {
+        if (escolhida[i] == palavra_teste[i]) {
+            ocorrencias[i] = '2';
+        }
+    }
+
+    // Aloca os amarelos
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (ocorrencias[j] == '0' && ocorrencias[i] == '0' && escolhida[i] == palavra_teste[j]) {
+                ocorrencias[j] = '1';
+                break;
+            }
+        }
+    }
+}
+
+int verificaVitoria(char ocorrencias[]){
+        for (int i = 0; i < 5; i++) {
+        if (ocorrencias[i] != '2') {
+            return 0; // Se encontrar algo diferente de '2', ainda não venceu
+        }
+    }
+    return 1; // Se percorreu tudo e só encontrou '2', venceu
+}

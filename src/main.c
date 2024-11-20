@@ -91,20 +91,37 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 break;
 
             case GLFW_KEY_ENTER:
-            if (telaAtual == JOGO) {
-                string = pilhaParaString(pilha);
-                printf("\nPilha convertida para string: %s\n", string);
+                if (telaAtual == JOGO) {
+                    // Converte a pilha para string
+                    string = pilhaParaString(pilha);
+                    printf("\nPilha convertida para string: %s\n", string);
 
-                int resultado = buscarNaLibrary(string,987,0,0);
-                if(resultado == 1)
-                printf("Palavra encontrada\n\n");
-                else
-                printf("Palavra nao encontrada\n\n");
+                    // Verifica se a palavra está na biblioteca
+                    int resultado = buscarNaLibrary(string, 987, 0, 0);
+                    if (resultado == 1) {
+                        printf("Palavra encontrada\n\n");
 
-                limparPilha(pilha);
+                        // Testa as letras da palavra
+                        char ocorrencias[6];
+                        testeDeLetras(string, escolhida, ocorrencias);
 
-                break;
-            }
+                        // Exibe as ocorrências
+                        printf("Ocorrencias: %s\n", ocorrencias);
+
+                        // Verifica se o jogador venceu
+                        if (verificaVitoria(ocorrencias)) {
+                            printf("Parabens! Voce venceu!\n");
+                            telaAtual = MENU; // Exemplo de mudança de tela para indicar vitória
+                            atualizaTela(window);
+                        }
+                    } else {
+                        printf("Palavra nao encontrada\n\n");
+                    }
+
+                    // Limpa a pilha após o processamento
+                    limparPilha(pilha);
+                    break;
+                }
 
             case GLFW_KEY_BACKSPACE:
                 if (telaAtual == JOGO) {

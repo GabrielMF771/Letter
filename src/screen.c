@@ -156,8 +156,6 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
                 gerarLibrary();
                 printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
 
-                
-
                 telaAtual = JOGO;
             } else {
                 printf("Utilize o modo infinito!\n");
@@ -187,7 +185,7 @@ void desenhaTelaEstatisticas(GLFWwindow* window) {
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
+    
 
     glfwSwapBuffers(glfwGetCurrentContext());
 }
