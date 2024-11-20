@@ -18,6 +18,7 @@ GLuint TituloTexture = 0;
 
 int isStartButtonClicked = 0;
 int isStatsButtonClicked = 0;
+int isInfiniteButtonClicked = 0;
 
 GLuint LoadTexture(const char* filePath) {
     GLuint texture = SOIL_load_OGL_texture(
@@ -122,6 +123,7 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
             // Verificar se o clique está no botão "Modo Infinito"
             if (isButtonClicked(infiniteButton, xpos, ypos, WIDTH, HEIGHT)) {
                 printf("Modo Infinito pressionado!\n");
+                isInfiniteButtonClicked = 1;
                 telaAtual = JOGO;
                 // Lógica para iniciar o jogo infinito
                 iniciarFase();
@@ -193,6 +195,7 @@ void atualizaTela(GLFWwindow* window) {
             desenhaMenuPrincipal(window);
             isStartButtonClicked = 0;
             isStatsButtonClicked = 0;
+            isInfiniteButtonClicked = 0;
             break;
         case JOGO:
             desenhaTelaJogo(window);

@@ -15,8 +15,9 @@ typedef struct Button {
     float width, height; // Tamanho do botão
 } Button;
 
-// Variável global para armazenar o estado atual da tela
+// Variáveis globais
 extern Tela telaAtual;
+extern int isInfiniteButtonClicked;
 
 // Texturas
 extern GLuint startButtonTexture;

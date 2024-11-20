@@ -328,11 +328,19 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             // Altera a tela atual para o menu
             telaAtual = JOGO;
             atualizaTela(window); // Usa a variável global e faz o cast
-            iniciarFase();
 
             if (fase >= 5) {
                 captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
                 printf("Tempo parou de contar\n");
+            }
+
+            if(fase < 6){
+                iniciarFase();
+            } else if (isInfiniteButtonClicked){
+                iniciarFase();
+            } else {
+                telaAtual = MENU;
+                atualizaTela(window);
             }
         }
     } else {
