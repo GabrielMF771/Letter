@@ -5,14 +5,20 @@ int horas = 0;
 int minutos = 0;
 int segundos = 0;
 
+int capturouTempo = 0;
+
 // Função q aloca o tempo em q foi iniciada a primeira fase - CHAMAR QND INICIAR O JOGO
 void captura_tempo_inicio(int *horas,int *minutos,int *segundos) {
-    time_t agora;
-    time(&agora);
-    struct tm *tempo_local = localtime(&agora);
-    *horas = tempo_local->tm_hour;
-    *minutos = tempo_local->tm_min;
-    *segundos = tempo_local->tm_sec;
+    if (capturouTempo == 0){
+        time_t agora;
+        time(&agora);
+        struct tm *tempo_local = localtime(&agora);
+        *horas = tempo_local->tm_hour;
+        *minutos = tempo_local->tm_min;
+        *segundos = tempo_local->tm_sec;
+    } else {
+        printf("Impossivel capturar novamente!");
+    }
 }
 
 // Função q vai pegar o tempo final e subtrair com o inicial - CHAMAR QND ENCERRAR O JOGO 
@@ -40,4 +46,6 @@ void captura_tempo_final_e_calcula(int *horas, int *minutos, int *segundos) {
     *horas = diferenca / 3600;
     *minutos = (diferenca % 3600) / 60;
     *segundos = diferenca % 60;
+
+    capturouTempo = 1;
 }

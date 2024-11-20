@@ -34,7 +34,11 @@ char* pilhaParaString(pilhaLetra *pilha);
 void limparPilha(pilhaLetra *pilha);
 
 // Teste das palavras
-void testeDeLetras(char palavra_teste[], char escolhida[], char ocorrencias[]);
+void testeDeLetras(const char palavra_teste[], const char escolhida[], char ocorrencias[]);
 int verificaVitoria(char ocorrencias[]);
+
+// Jogo
+void verificacao(const char* escolhida, pilhaLetra* pilha);
+void iniciarFase();
 
 #endif

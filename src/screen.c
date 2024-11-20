@@ -4,6 +4,7 @@
 #include <SOIL.h>
 
 #include "common.h"
+#include "window.h"
 #include "screen.h"
 #include "level.h"
 #include "score.h"
@@ -14,6 +15,9 @@ GLuint startButtonTexture = 0;
 GLuint statsButtonTexture = 0;
 GLuint infiniteButtonTexture = 0;
 GLuint TituloTexture = 0;
+
+int isStartButtonClicked = 0;
+int isStatsButtonClicked = 0;
 
 GLuint LoadTexture(const char* filePath) {
     GLuint texture = SOIL_load_OGL_texture(
@@ -117,13 +121,10 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
 
             // Verificar se o clique está no botão "Modo Infinito"
             if (isButtonClicked(infiniteButton, xpos, ypos, WIDTH, HEIGHT)) {
-            printf("Modo Infinito pressionado!\n");
-            telaAtual = JOGO;
-            // Lógica para iniciar o jogo infinito
-
-                gerarPalavraFases(fase);
-                gerarLibrary();
-                printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+                printf("Modo Infinito pressionado!\n");
+                telaAtual = JOGO;
+                // Lógica para iniciar o jogo infinito
+                iniciarFase();
             }
         }
         
@@ -135,8 +136,9 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
         glfwGetCursorPos(window, &xpos, &ypos);  // Posição do mouse na janela
 
         // Verificar se o clique está no botão "Estatísticas"
-        if (isButtonClicked(statsButton, xpos, ypos, WIDTH, HEIGHT)) {
+        if (isButtonClicked(statsButton, xpos, ypos, WIDTH, HEIGHT) && !isStatsButtonClicked) {
             printf("Estatisticas pressionado!\n");
+            isStatsButtonClicked = 1;
             telaAtual = ESTATISTICAS;
             // Lógica para exibir as estatísticas
 
@@ -145,21 +147,14 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
         }
         
         // Verificar se o clique está no botão "Iniciar Jogo"
-        if (isButtonClicked(startButton, xpos, ypos, WIDTH, HEIGHT)) {
+        if (isButtonClicked(startButton, xpos, ypos, WIDTH, HEIGHT) && !isStartButtonClicked) {
             printf("Iniciar Jogo pressionado!\n");
-            if (fase != 6){
-                // Lógica para iniciar o jogo
-                printf("Tempo contando\n");
-                captura_tempo_inicio(&horas, &minutos, &segundos);
+            isStartButtonClicked = 1;
 
-                gerarPalavraFases(fase);
-                gerarLibrary();
-                printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
-
-                telaAtual = JOGO;
+            if(fase < 6){
+                iniciarFase();
             } else {
                 printf("Utilize o modo infinito!\n");
-                telaAtual = MENU;
             }
         }
     }
@@ -185,7 +180,7 @@ void desenhaTelaEstatisticas(GLFWwindow* window) {
     glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    
+
 
     glfwSwapBuffers(glfwGetCurrentContext());
 }
@@ -195,11 +190,9 @@ void atualizaTela(GLFWwindow* window) {
     // Desenha a tela conforme o estado atual
     switch (telaAtual) {
         case MENU:
-            if (fase >= 6) {
-                captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
-                printf("Tempo parou de contar\n");
-            }
             desenhaMenuPrincipal(window);
+            isStartButtonClicked = 0;
+            isStatsButtonClicked = 0;
             break;
         case JOGO:
             desenhaTelaJogo(window);

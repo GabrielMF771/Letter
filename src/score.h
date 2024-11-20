@@ -9,4 +9,6 @@ extern int horas;
 extern int minutos;
 extern int segundos;
 
+extern int capturouTempo;
+
 #endif

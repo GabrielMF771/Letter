@@ -4,6 +4,7 @@
 #include <SOIL.h>
 
 #include "common.h"
+#include "window.h"
 #include "screen.h"
 #include "level.h"
 #include "score.h"
@@ -17,8 +18,10 @@ void liberaRecursos();
 
 const GLuint WIDTH = 900, HEIGHT = 900;
 
+// Declaração das variáveis
 pilhaLetra* pilha;
 char *string;
+GLFWwindow* window = NULL;
 
 // Função para configurar a janela e o contexto OpenGL
 void initOpenGL(GLFWwindow** window) {
@@ -92,34 +95,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
             case GLFW_KEY_ENTER:
                 if (telaAtual == JOGO) {
-                    // Converte a pilha para string
-                    string = pilhaParaString(pilha);
-                    printf("\nPilha convertida para string: %s\n", string);
-
-                    // Verifica se a palavra está na biblioteca
-                    int resultado = buscarNaLibrary(string, 987, 0, 0);
-                    if (resultado == 1) {
-                        printf("Palavra encontrada\n\n");
-
-                        // Testa as letras da palavra
-                        char ocorrencias[6];
-                        testeDeLetras(string, escolhida, ocorrencias);
-
-                        // Exibe as ocorrências
-                        printf("Ocorrencias: %s\n", ocorrencias);
-
-                        // Verifica se o jogador venceu
-                        if (verificaVitoria(ocorrencias)) {
-                            printf("Parabens! Voce venceu!\n");
-                            telaAtual = MENU; // Exemplo de mudança de tela para indicar vitória
-                            atualizaTela(window);
-                        }
-                    } else {
-                        printf("Palavra nao encontrada\n\n");
-                    }
-
-                    // Limpa a pilha após o processamento
-                    limparPilha(pilha);
+                    verificacao(escolhida, pilha);
                     break;
                 }
 
@@ -152,8 +128,6 @@ void liberaRecursos(){
 }
 
 int main() {
-    GLFWwindow* window;
-
     // Inicializa OpenGL
     initOpenGL(&window);
 

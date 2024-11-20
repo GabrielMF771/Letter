@@ -1,6 +1,8 @@
 #include "common.h"
+#include "window.h"
 #include "level.h"
 #include "score.h"
+#include "screen.h"
 
 int fase = 1;
 
@@ -259,7 +261,7 @@ void limparPilha(pilhaLetra *pilha) {
 //1 = AMARELO
 //2 = VERDE
 
-void testeDeLetras(char palavra_teste[], char escolhida[], char ocorrencias[]) {
+void testeDeLetras(const char palavra_teste[], const char escolhida[], char ocorrencias[]) {
     // Inicializa ocorrências como "00000"
     for (int i = 0; i < 5; i++) {
         ocorrencias[i] = '0';
@@ -291,4 +293,74 @@ int verificaVitoria(char ocorrencias[]){
         }
     }
     return 1; // Se percorreu tudo e só encontrou '2', venceu
+}
+
+// Jogo
+
+void verificacao(const char* escolhida, pilhaLetra* pilha) {
+    // Converte a pilha para string
+    char* string = pilhaParaString(pilha);
+    printf("\nPilha convertida para string: %s\n", string);
+
+    // Verifica se a palavra está na biblioteca
+    int resultado = buscarNaLibrary(string, 987, 0, 0);
+    if (resultado == 1) {
+        printf("Palavra encontrada\n\n");
+
+        // Testa as letras da palavra
+        char ocorrencias[6];
+        testeDeLetras(string, escolhida, ocorrencias);
+
+        // Exibe as ocorrências
+        printf("Ocorrencias: %s\n", ocorrencias);
+
+        // Verifica se o jogador venceu
+        if (verificaVitoria(ocorrencias)) {
+            printf("Parabens! Voce venceu!\n");
+
+            // Atualiza a fase atual
+            if (fase < 6){
+                fase++;
+            } else {
+                fase = 6;
+            }
+
+            // Altera a tela atual para o menu
+            telaAtual = JOGO;
+            atualizaTela(window); // Usa a variável global e faz o cast
+            iniciarFase();
+
+            if (fase >= 5) {
+                captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
+                printf("Tempo parou de contar\n");
+            }
+        }
+    } else {
+        printf("Palavra não encontrada\n\n");
+    }
+
+    // Limpa a pilha após o processamento
+    limparPilha(pilha);
+}
+
+void iniciarFase(){
+    if (fase < 6){
+    // Lógica para iniciar o jogo
+    printf("Tempo contando\n");
+    captura_tempo_inicio(&horas, &minutos, &segundos);
+
+    gerarPalavraFases(fase);
+    gerarLibrary();
+    printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+    telaAtual = JOGO;
+    atualizaTela(window);
+    } else {
+        gerarPalavraFases(fase);
+        gerarLibrary();
+        printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+        telaAtual = JOGO;
+        atualizaTela(window);
+    }
 }
