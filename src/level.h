@@ -1,7 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#define MAX_PALAVRAS 2008
+#define MAX_PALAVRAS 2146
 #define MAX_PALAVRASDASFASES 20
 #define TAMANHO_PALAVRA 6
 
