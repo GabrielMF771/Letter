@@ -64,23 +64,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) {
         switch (key) {
-            case GLFW_KEY_1:
-                if (telaAtual == MENU) {
-                    telaAtual = JOGO;  // Vai para a tela de jogo
-                    desenhaTelaJogo(window);
-                }
-                break;
-
-            case GLFW_KEY_2:
-                if (telaAtual == MENU) {
-                    telaAtual = ESTATISTICAS;  // Vai para a tela de estatísticas
-                    desenhaTelaEstatisticas(window);
-                }
-                break;
-
             case GLFW_KEY_UP:
                 fase = (fase >= 6) ? 1 : 6;
                 printf("\nFase alterada para %d\n", fase);
+                isStartButtonClicked = 0;
                 break;
 
             case GLFW_KEY_ESCAPE:
@@ -101,7 +88,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
             case GLFW_KEY_BACKSPACE:
                 if (telaAtual == JOGO) {
-                    if(isEmpty(pilha)){
+                    if (isEmpty(pilha)) {
                         break;
                     }
                     pop(pilha);  // Remove o elemento do topo da pilha
@@ -110,12 +97,30 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 break;
 
             default:
-                // Verifica se a tecla é uma letra (GLFW_KEY_A até GLFW_KEY_Z)
+                // Verifica se a tecla é uma letra (A-Z)
                 if (key >= GLFW_KEY_A && key <= GLFW_KEY_Z && telaAtual == JOGO) {
                     // Converte a tecla para minúscula
                     char letra = tolower('A' + (key - GLFW_KEY_A));
                     // Adiciona a letra na pilha
                     push(pilha, letra);
+
+                    // Encontrar a linha e o slot onde a letra deve ser armazenada
+                    int linhaSelecionada = 0;  // Linha onde a letra será armazenada
+                    int slotSelecionado = 0;   // Slot onde a letra será armazenada (escolha dinâmica conforme o jogo)
+
+                    // Encontrar o próximo slot disponível
+                    for (int j = 0; j < TAMANHO_LINHA; j++) {
+                        if (linhas[linhaSelecionada].slots[j].letra == '\0') {
+                            slotSelecionado = j;
+                            break;
+                        }
+                    }
+
+                    // Atualiza a letra no slot da linha
+                    linhas[linhaSelecionada].slots[slotSelecionado].letra = letra;
+
+                    // Atualiza a tela para mostrar a letra
+                    atualizaTela(window);  // Função que redesenha a tela
                 }
                 break;
         }
@@ -124,7 +129,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void liberaRecursos(){
     liberaTexturasMenu();
-    free(pilha);
+    liberaTexturasJogo();
 }
 
 int main() {
@@ -135,10 +140,11 @@ int main() {
     glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
 
     carregaTexturasMenu();
+    carregaTexturasJogo();
     pilha = criarpilha();
 
     while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
+        atualizaTela(window);
 
         // Desenha a tela com base no estado atual
         if (telaAtual == MENU) {
@@ -153,6 +159,7 @@ int main() {
     }
 
     liberaRecursos();
+    free(pilha);
 
     glfwDestroyWindow(window);
     glfwTerminate();

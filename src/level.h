@@ -3,12 +3,16 @@
 
 #define MAX_PALAVRAS 2146
 #define MAX_PALAVRASDASFASES 20
+#define MAX_PALAVRASDAFASE6 4292
 #define TAMANHO_PALAVRA 6
 
 // Validação da palavra
 char gerarPalavraFases(int fase);
 void gerarLibrary();
 int buscarNaLibrary(char palavrateste[], int final, int meio, int inicio);
+
+// Variavel global das ocorrências
+extern char ocorrencias[6];
 
 // Pilha
 
@@ -34,7 +38,7 @@ char* pilhaParaString(pilhaLetra *pilha);
 void limparPilha(pilhaLetra *pilha);
 
 // Teste das palavras
-void testeDeLetras(const char palavra_teste[], const char escolhida[], char ocorrencias[]);
+void testeDeLetras(const char palavra_teste[], const char escolhida[]);
 int verificaVitoria(char ocorrencias[]);
 
 // Jogo

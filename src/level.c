@@ -7,8 +7,10 @@
 int fase = 1;
 
 //vetor q vai armazenar todas as palavras em ordem
-char plvrDaFase[9][TAMANHO_PALAVRA];
+char plvrDaFase[10][TAMANHO_PALAVRA];
+char plvrDaFase6[2145][TAMANHO_PALAVRA];
 char auxDaFase[MAX_PALAVRASDASFASES][TAMANHO_PALAVRA];
+char auxDaFase6[MAX_PALAVRASDAFASE6][TAMANHO_PALAVRA];
 //var q armazena a palavra da fase atual
 char escolhida[6];
 
@@ -48,25 +50,46 @@ char gerarPalavraFases(int fase){
         printf("Txt da fase aberto com sucesso\n");
     }
 
-    //aloca no auxiliar
-    int i = 0;
-    while(fgets(auxDaFase[i],TAMANHO_PALAVRA,file)!= NULL && i < MAX_PALAVRASDASFASES){
+    if(fase == 6){
+        // Aloca no auxiliar
+        int i = 0;
+        while(fgets(auxDaFase6[i], TAMANHO_PALAVRA, file) != NULL && i < MAX_PALAVRASDAFASE6){
+            auxDaFase6[i][strcspn(auxDaFase6[i], "\n")] = '\0';  // Remove o '\n' no final
             i++;
-    }
-
-    //ajusta as alocações, coloca 1 palavra em cada vetor da library
-    int j =0;
-    for(i = 0; i <20; i++){
-        if(i %2 == 0){
-    strcpy(plvrDaFase[j], auxDaFase[i]);
-        j++;
         }
+
+        // Ajusta as alocações, coloca 1 palavra em cada vetor da library
+        int j = 0;
+        for(i = 0; i < MAX_PALAVRASDAFASE6; i++){
+            if(i % 2 == 0){
+                strcpy(plvrDaFase6[j], auxDaFase6[i]);
+                j++;
+            }
+        }
+
+        srand(time(NULL));
+        strcpy(escolhida, plvrDaFase6[rand() % j]); // Garante que a palavra escolhida está dentro do vetor preenchido
+    } else {
+        //aloca no auxiliar
+        int i = 0;
+        while(fgets(auxDaFase[i], TAMANHO_PALAVRA, file)!= NULL && i < MAX_PALAVRASDASFASES){
+            auxDaFase[i][strcspn(auxDaFase[i], "\n")] = '\0';  // Remove o '\n' no final
+            i++;
+        }
+
+        // Ajusta as alocações, coloca 1 palavra em cada vetor da library
+        int j = 0;
+        for(i = 0; i < MAX_PALAVRASDASFASES; i++){
+            if(i % 2 == 0){
+                strcpy(plvrDaFase[j], auxDaFase[i]);
+                j++;
+            }
+        }
+
+        // Escolhendo a palavra - variável "escolhida" é global e vai ser usada em todas as fases
+        srand(time(NULL));
+        strcpy(escolhida, plvrDaFase[rand() % j]);  // Garante que a palavra escolhida está dentro do vetor preenchido
     }
-
-    //escolhendo a palavra - var "escolhida" é global e vai ser usada em todas as fases
-    srand(time(NULL));
-    strcpy(escolhida,plvrDaFase[(rand())%10]);
-
 }
 
 char library[1073][TAMANHO_PALAVRA];
@@ -261,7 +284,9 @@ void limparPilha(pilhaLetra *pilha) {
 //1 = AMARELO
 //2 = VERDE
 
-void testeDeLetras(const char palavra_teste[], const char escolhida[], char ocorrencias[]) {
+char ocorrencias[6] = "00000";
+
+void testeDeLetras(const char palavra_teste[], const char escolhida[]) {
     // Inicializa ocorrências como "00000"
     for (int i = 0; i < 5; i++) {
         ocorrencias[i] = '0';
@@ -297,6 +322,8 @@ int verificaVitoria(char ocorrencias[]){
 
 // Jogo
 
+int tentativas = 6; // Inicializa as tentativas
+
 void verificacao(const char* escolhida, pilhaLetra* pilha) {
     // Converte a pilha para string
     char* string = pilhaParaString(pilha);
@@ -304,22 +331,28 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
 
     // Verifica se a palavra está na biblioteca
     int resultado = buscarNaLibrary(string, 1073, 0, 0);
-    if (resultado == 1) {
+    
+    if (resultado == 1) {  // Se a palavra for encontrada
         printf("Palavra encontrada\n\n");
+        tentativas--;
 
         // Testa as letras da palavra
-        char ocorrencias[6];
-        testeDeLetras(string, escolhida, ocorrencias);
+        testeDeLetras(string, escolhida);
+
+        atualizarOcorrencias();  // Redesenha os slots com base nas novas ocorrências
 
         // Exibe as ocorrências
         printf("Ocorrencias: %s\n", ocorrencias);
+
+        // Exibe as tentativas restantes
+        printf("Tentativas restantes %d\n", tentativas);
 
         // Verifica se o jogador venceu
         if (verificaVitoria(ocorrencias)) {
             printf("Parabens! Voce venceu!\n");
 
             // Atualiza a fase atual
-            if (fase < 6){
+            if (fase < 6) {
                 fase++;
             } else {
                 fase = 6;
@@ -329,14 +362,19 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             telaAtual = JOGO;
             atualizaTela(window); // Usa a variável global e faz o cast
 
+            // Resetando a string ocorrencias
+            for (int i = 0; i < 6; i++) {
+                ocorrencias[i] = '0'; // Resetando as ocorrências
+            }
+
             if (fase >= 5) {
                 captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
                 printf("Tempo parou de contar\n");
             }
 
-            if(fase < 6){
+            if (fase < 6) {
                 iniciarFase();
-            } else if (isInfiniteButtonClicked){
+            } else if (isInfiniteButtonClicked) {
                 iniciarFase();
             } else {
                 telaAtual = MENU;
@@ -345,28 +383,55 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
         }
     } else {
         printf("Palavra não encontrada\n\n");
+
+        // Se a palavra não for encontrada, não decrementa as tentativas
+        printf("Tentativas restantes: %d\n", tentativas);
     }
+
+    // Se não houver tentativas restantes, o jogador perde
+        if (tentativas == 0) {
+            printf("Voce perdeu! O jogo esta sendo reiniciado.\n");
+            tentativas = 6; // Reseta o número de tentativas
+            fase = 1; // Reseta a fase
+            telaAtual = MENU;
+            atualizaTela(window);
+        }
 
     // Limpa a pilha após o processamento
     limparPilha(pilha);
 }
 
-void iniciarFase(){
-    if (fase < 6){
-    // Lógica para iniciar o jogo
-    printf("Tempo contando\n");
-    captura_tempo_inicio(&horas, &minutos, &segundos);
+void iniciarFase() {
+    tentativas = 6;
+    if (fase < 6) {
+        // Lógica para iniciar o jogo
+        printf("Tempo contando\n");
+        captura_tempo_inicio(&horas, &minutos, &segundos);
 
-    gerarPalavraFases(fase);
-    gerarLibrary();
-    printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+        gerarPalavraFases(fase);
+        gerarLibrary();
+        printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
 
-    telaAtual = JOGO;
-    atualizaTela(window);
+        // Resetando as ocorrências e as linhas
+        linha_atual = 0;  // Resetando a linha atual
+        memset(linhas, 0, sizeof(linhas));  // Limpa as linhas
+
+        // Redesenha os slots
+        desenharSlots();
+
+        telaAtual = JOGO;
+        atualizaTela(window);
     } else {
         gerarPalavraFases(fase);
         gerarLibrary();
         printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+        // Resetando as ocorrências e as linhas
+        linha_atual = 0;  // Resetando a linha atual
+        memset(linhas, 0, sizeof(linhas));  // Limpa as linhas
+
+        // Redesenha os slots
+        desenharSlots();
 
         telaAtual = JOGO;
         atualizaTela(window);
