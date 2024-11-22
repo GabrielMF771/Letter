@@ -378,7 +378,7 @@ void desenharSlots() {
                 default: texturaLetra = VazioTexture; break;
             }
 
-            // Se a textura da letra foi alterada, desenha a letra
+            // Desenha a letra
             if (texturaLetra != VazioTexture) {
                 desenharLetra(x + 0.05f, y - 0.15f, texturaLetra);
 
@@ -390,27 +390,36 @@ void desenharSlots() {
     }
 }
 
-// Função para lidar com o backspace
-void backspace() {
-    // Verifica se existe uma letra para apagar
-    if (ultimaLinha != -1 && ultimaColuna != -1) {
-        // Substitui a última letra desenhada por VazioTexture
-        linhas[ultimaLinha].letra[ultimaColuna] = ' ';  // Limpa a letra
+// Função que apaga uma letra da tela
+void backspace(int vezes) {
+    for (int i = 0; i < vezes; i++) {
+        // Verifica se há uma letra a ser apagada
+        if (ultimaLinha != -1 && ultimaColuna != -1) {
+            // Substitui a última letra por um espaço em branco
+            linhas[ultimaLinha].letra[ultimaColuna] = ' ';
+            
+            // Calcula as coordenadas para o slot
+            float x = -(TAMANHO_LINHA) * 0.1f + ultimaColuna * 0.2f;
+            float y = (MAX_LINHAS) * 0.1f - ultimaLinha * 0.2f;
 
-        // Redesenha a slot onde a letra foi apagada com a textura do slot original
-        float x = -(TAMANHO_LINHA) * 0.1f + ultimaColuna * 0.2f;
-        float y = (MAX_LINHAS) * 0.1f - ultimaLinha * 0.2f;
+            // Redesenha o slot com a textura padrão (cinza)
+            GLuint textura = slotCinzaTexture;
+            desenharSlot(x, y, textura);
 
-        // Redesenha o slot
-        GLuint textura = slotCinzaTexture;  // Ou a textura padrão do slot
-        desenharSlot(x, y, textura);
+            // Substitui a letra por uma textura vazia
+            desenharLetra(x + 0.05f, y - 0.15f, VazioTexture);
 
-        // Apaga a letra
-        desenharLetra(x + 0.05f, y - 0.15f, VazioTexture);
-
-        // Reseta a última posição para evitar múltiplos backspaces seguidos
-        ultimaLinha = -1;
-        ultimaColuna = -1;
+            if (ultimaColuna > 0) {
+                ultimaColuna--;
+            } else if (ultimaLinha > 0) {
+                ultimaLinha--;
+                ultimaColuna = TAMANHO_LINHA - 1;
+            } else {
+                break;
+            }
+        } else {
+            break;
+        }
     }
 }
 

@@ -27,8 +27,8 @@ typedef struct Slot {
 #define MAX_LINHAS 6
 
 typedef struct Linha{
-    char estado[TAMANHO_LINHA];  // Estado de cada letra ('2', '1', '0')
-    int atual;                   // 1 se a linha for a atual, 0 caso contrário
+    char estado[TAMANHO_LINHA]; // Estado de cada letra ('2', '1', '0')
+    int atual; // 1 se a linha for a atual, 0 caso contrário
     char letra[TAMANHO_LINHA]; // Armazena a letra digitada
 } Linha;
 

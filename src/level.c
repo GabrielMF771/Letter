@@ -386,6 +386,7 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
         }
     } else {
         printf("Palavra não encontrada\n\n");
+        backspace(5);
 
         // Se a palavra não for encontrada, não decrementa as tentativas
         printf("Tentativas restantes: %d\n", tentativas);
@@ -418,8 +419,8 @@ void iniciarFase() {
         printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
 
         // Resetando as ocorrências e as linhas
-        linha_atual = 0;  // Resetando a linha atual
-        memset(linhas, 0, sizeof(linhas));  // Limpa as linhas
+        linha_atual = 0; // Resetando a linha atual
+        memset(linhas, 0, sizeof(linhas)); // Limpa as linhas
 
         // Redesenha os slots
         desenharSlots();
