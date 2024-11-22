@@ -23,6 +23,28 @@ pilhaLetra* pilha;
 char *string;
 GLFWwindow* window = NULL;
 
+// Função para carregar o ícone da janela
+GLuint carregarIcone(const char* caminho) {
+    // Carrega a imagem com SOIL
+    int largura, altura, canais;
+    unsigned char* dados = SOIL_load_image(caminho, &largura, &altura, &canais, SOIL_LOAD_AUTO);
+
+    if (!dados) {
+        fprintf(stderr, "Falha ao carregar o ícone da janela: %s\n", caminho);
+        return 0;
+    }
+
+    // Cria uma textura OpenGL para a imagem
+    GLuint textura;
+    glGenTextures(1, &textura);
+    glBindTexture(GL_TEXTURE_2D, textura);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, largura, altura, 0, GL_RGBA, GL_UNSIGNED_BYTE, dados);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    SOIL_free_image_data(dados); // Libera os dados da imagem
+
+    return textura;
+}
+
 // Função para configurar a janela e o contexto OpenGL
 void initOpenGL(GLFWwindow** window) {
     // Inicializa o GLFW
@@ -44,6 +66,14 @@ void initOpenGL(GLFWwindow** window) {
 
     // Define limites fixos para o tamanho da janela (largura, altura mínima e máxima)
     glfwSetWindowSizeLimits(*window, WIDTH, HEIGHT, WIDTH, HEIGHT);
+
+    // Define o ícone da janela
+    GLFWimage icone;
+    icone.pixels = SOIL_load_image("assets/icon.png", &icone.width, &icone.height, 0, SOIL_LOAD_RGBA);
+    if (icone.pixels) {
+        glfwSetWindowIcon(*window, 1, &icone); // Define o ícone da janela
+        SOIL_free_image_data(icone.pixels); // Libera a memória da imagem
+    }
 
     // Inicializa o GLAD para gerenciar funções do OpenGL
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
