@@ -82,6 +82,14 @@ extern GLuint letraYTexture;
 extern GLuint letraZTexture;
 extern GLuint VazioTexture;
 
+// Fases
+extern GLuint fase1Texture;
+extern GLuint fase2Texture;
+extern GLuint fase3Texture;
+extern GLuint fase4Texture;
+extern GLuint fase5Texture;
+extern GLuint fase6Texture;
+
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
 extern const GLuint HEIGHT;

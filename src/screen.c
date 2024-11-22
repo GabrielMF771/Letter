@@ -23,6 +23,7 @@ GLuint slotCinzaTexture = 0;
 GLuint slotAmareloTexture = 0;
 GLuint slotVerdeTexture = 0;
 
+// Letras
 GLuint letraATexture = 0;
 GLuint letraBTexture = 0;
 GLuint letraCTexture = 0;
@@ -51,6 +52,13 @@ GLuint letraYTexture = 0;
 GLuint letraZTexture = 0;
 GLuint VazioTexture = 0;
 
+// Título das fases
+GLuint fase1Texture = 0;
+GLuint fase2Texture = 0;
+GLuint fase3Texture = 0;
+GLuint fase4Texture = 0;
+GLuint fase5Texture = 0;
+GLuint fase6Texture = 0;
 
 // Flags e estados do clique
 int mouseButtonPressed = 0;
@@ -168,6 +176,13 @@ void carregaTexturasJogo(){
     letraYTexture = LoadTexture("assets/levels/letters/Y.png");
     letraZTexture = LoadTexture("assets/levels/letters/Z.png");
     VazioTexture = LoadTexture("assets/levels/letters/Vazio.png");
+
+    fase1Texture = LoadTexture("assets/levels/Fase1.png");
+    fase2Texture = LoadTexture("assets/levels/Fase2.png");
+    fase3Texture = LoadTexture("assets/levels/Fase3.png");
+    fase4Texture = LoadTexture("assets/levels/Fase4.png");
+    fase5Texture = LoadTexture("assets/levels/Fase5.png");
+    fase6Texture = LoadTexture("assets/levels/Fase6.png");
 }
 
 void liberaTexturasJogo(){
@@ -202,6 +217,13 @@ void liberaTexturasJogo(){
     DeleteButtonTexture(&letraYTexture);
     DeleteButtonTexture(&letraZTexture);
     DeleteButtonTexture(&VazioTexture);
+
+    DeleteButtonTexture(&fase1Texture);
+    DeleteButtonTexture(&fase2Texture);
+    DeleteButtonTexture(&fase3Texture);
+    DeleteButtonTexture(&fase4Texture);
+    DeleteButtonTexture(&fase5Texture);
+    DeleteButtonTexture(&fase6Texture);
 }
 
 // Função para desenhar o menu principal
@@ -462,6 +484,38 @@ void desenhaTelaJogo(GLFWwindow* window) {
 
     //Desenhar os slots
     desenharSlots();
+
+    //Desenhar o título da fase
+    GLuint faseTexture = 0;
+
+    switch (fase)
+    {
+    case 1:
+        faseTexture = fase1Texture;
+        break;
+
+    case 2:
+        faseTexture = fase2Texture;
+        break;
+    case 3:
+        faseTexture = fase3Texture;
+        break;
+    case 4:
+        faseTexture = fase4Texture;
+        break;
+    case 5:
+        faseTexture = fase5Texture;
+        break;
+    case 6:
+        faseTexture = fase6Texture;
+        break;
+    default:
+        faseTexture = fase1Texture;
+    break;
+    }
+
+    Button FaseButton = {faseTexture, 0.0f, 0.78f, 0.7f, 0.25f};
+    DrawButton(FaseButton.texture, FaseButton.xPos - FaseButton.width / 2, FaseButton.yPos - FaseButton.height / 2, FaseButton.width, FaseButton.height);
 
     glDisable(GL_BLEND);
 }
