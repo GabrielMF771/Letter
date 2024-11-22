@@ -23,9 +23,32 @@ GLuint slotCinzaTexture = 0;
 GLuint slotAmareloTexture = 0;
 GLuint slotVerdeTexture = 0;
 
-GLuint letraTexture = 0;
 GLuint letraATexture = 0;
 GLuint letraBTexture = 0;
+GLuint letraCTexture = 0;
+GLuint letraDTexture = 0;
+GLuint letraETexture = 0;
+GLuint letraFTexture = 0;
+GLuint letraGTexture = 0;
+GLuint letraHTexture = 0;
+GLuint letraITexture = 0;
+GLuint letraJTexture = 0;
+GLuint letraKTexture = 0;
+GLuint letraLTexture = 0;
+GLuint letraMTexture = 0;
+GLuint letraNTexture = 0;
+GLuint letraOTexture = 0;
+GLuint letraPTexture = 0;
+GLuint letraQTexture = 0;
+GLuint letraRTexture = 0;
+GLuint letraSTexture = 0;
+GLuint letraTTexture = 0;
+GLuint letraUTexture = 0;
+GLuint letraVTexture = 0;
+GLuint letraWTexture = 0;
+GLuint letraXTexture = 0;
+GLuint letraYTexture = 0;
+GLuint letraZTexture = 0;
 
 
 // Flags e estados do clique
@@ -35,8 +58,8 @@ int isStatsButtonClicked = 0;
 int isMenuButtonClicked = 0;
 int isInfiniteButtonClicked = 0;
 
-Linha linhas[MAX_LINHAS];
 int linha_atual = 0; // Índice da linha atual
+Linha linhas[MAX_LINHAS];
 
 GLuint LoadTexture(const char* filePath) {
     GLuint texture = SOIL_load_OGL_texture(
@@ -119,12 +142,63 @@ void carregaTexturasJogo(){
 
     letraATexture = LoadTexture("assets/levels/letters/A.png");
     letraBTexture = LoadTexture("assets/levels/letters/B.png");
+    letraCTexture = LoadTexture("assets/levels/letters/C.png");
+    letraDTexture = LoadTexture("assets/levels/letters/D.png");
+    letraETexture = LoadTexture("assets/levels/letters/E.png");
+    letraFTexture = LoadTexture("assets/levels/letters/F.png");
+    letraGTexture = LoadTexture("assets/levels/letters/G.png");
+    letraHTexture = LoadTexture("assets/levels/letters/H.png");
+    letraITexture = LoadTexture("assets/levels/letters/I.png");
+    letraJTexture = LoadTexture("assets/levels/letters/J.png");
+    letraKTexture = LoadTexture("assets/levels/letters/K.png");
+    letraLTexture = LoadTexture("assets/levels/letters/L.png");
+    letraMTexture = LoadTexture("assets/levels/letters/M.png");
+    letraNTexture = LoadTexture("assets/levels/letters/N.png");
+    letraOTexture = LoadTexture("assets/levels/letters/O.png");
+    letraPTexture = LoadTexture("assets/levels/letters/P.png");
+    letraQTexture = LoadTexture("assets/levels/letters/Q.png");
+    letraRTexture = LoadTexture("assets/levels/letters/R.png");
+    letraSTexture = LoadTexture("assets/levels/letters/S.png");
+    letraTTexture = LoadTexture("assets/levels/letters/T.png");
+    letraUTexture = LoadTexture("assets/levels/letters/U.png");
+    letraVTexture = LoadTexture("assets/levels/letters/V.png");
+    letraWTexture = LoadTexture("assets/levels/letters/W.png");
+    letraXTexture = LoadTexture("assets/levels/letters/X.png");
+    letraYTexture = LoadTexture("assets/levels/letters/Y.png");
+    letraZTexture = LoadTexture("assets/levels/letters/Z.png");
 }
 
 void liberaTexturasJogo(){
     DeleteButtonTexture(&slotCinzaTexture);
     DeleteButtonTexture(&slotAmareloTexture);
     DeleteButtonTexture(&slotVerdeTexture);
+
+    DeleteButtonTexture(&letraATexture);
+    DeleteButtonTexture(&letraBTexture);
+    DeleteButtonTexture(&letraCTexture);
+    DeleteButtonTexture(&letraDTexture);
+    DeleteButtonTexture(&letraETexture);
+    DeleteButtonTexture(&letraFTexture);
+    DeleteButtonTexture(&letraGTexture);
+    DeleteButtonTexture(&letraHTexture);
+    DeleteButtonTexture(&letraITexture);
+    DeleteButtonTexture(&letraJTexture);
+    DeleteButtonTexture(&letraKTexture);
+    DeleteButtonTexture(&letraLTexture);
+    DeleteButtonTexture(&letraMTexture);
+    DeleteButtonTexture(&letraNTexture);
+    DeleteButtonTexture(&letraOTexture);
+    DeleteButtonTexture(&letraPTexture);
+    DeleteButtonTexture(&letraQTexture);
+    DeleteButtonTexture(&letraRTexture);
+    DeleteButtonTexture(&letraSTexture);
+    DeleteButtonTexture(&letraTTexture);
+    DeleteButtonTexture(&letraUTexture);
+    DeleteButtonTexture(&letraVTexture);
+    DeleteButtonTexture(&letraWTexture);
+    DeleteButtonTexture(&letraXTexture);
+    DeleteButtonTexture(&letraYTexture);
+    DeleteButtonTexture(&letraZTexture);
 }
 
 // Função para desenhar o menu principal
@@ -197,8 +271,7 @@ void atualizarOcorrencias() {
     if (linha_atual < MAX_LINHAS) {
         // Atualiza o estado da linha atual
         for (int i = 0; i < TAMANHO_LINHA; i++) {
-            linhas[linha_atual].slots[i].letra = ocorrencias[i]; // A letra digitada
-            linhas[linha_atual].slots[i].desenhado = 0; // Resetar a flag para redesenhar
+            linhas[linha_atual].estado[i] = ocorrencias[i];
         }
         linhas[linha_atual].atual = 1;
 
@@ -206,6 +279,7 @@ void atualizarOcorrencias() {
         linha_atual++;
     }
 }
+
 
 void desenharSlot(float x, float y, GLuint textura) {
     glBindTexture(GL_TEXTURE_2D, textura);
@@ -216,31 +290,10 @@ void desenharSlot(float x, float y, GLuint textura) {
         glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y - 0.2f);
     glEnd();
 }
-
-void desenharLetra(float x, float y, GLuint textura, int linhaIndex, int slotIndex) {
-    // Verifica se a letra já foi desenhada neste slot
-    if (linhas[linhaIndex].slots[slotIndex].desenhado) {
-        return; // Se já foi desenhada, não faz nada
-    }
-
-    // Desenha a letra
-    glBindTexture(GL_TEXTURE_2D, textura);
-    glBegin(GL_QUADS);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y);
-        glTexCoord2f(1.0f, 0.0f); glVertex2f(x + 0.1f, y);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f(x + 0.1f, y + 0.1f);
-        glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y + 0.1f);
-    glEnd();
-
-    // Marca o slot como desenhado
-    linhas[linhaIndex].slots[slotIndex].desenhado = 1;
-}
-
 void desenharSlots() {
     float offsetX = -(TAMANHO_LINHA) * 0.1f;
     float offsetY = (MAX_LINHAS) * 0.1f;
 
-    // Variável para armazenar a textura do slot
     GLuint textura = 0;
 
     for (int i = 0; i < MAX_LINHAS; i++) {
@@ -248,47 +301,25 @@ void desenharSlots() {
         for (int j = 0; j < TAMANHO_LINHA; j++) {
             float x = offsetX + j * 0.2f;
 
-            // Escolher a textura do slot
-            switch (linhas[i].slots[j].texture) {
-                case 2:
+            // Escolhe a textura com base no estado
+            switch (linhas[i].estado[j]) {
+                case '2':
                     textura = slotVerdeTexture;
                     break;
-                case 1:
+                case '1':
                     textura = slotAmareloTexture;
                     break;
-                case 0:
+                case '0':
                 default:
                     textura = slotCinzaTexture;
                     break;
             }
 
-            // Desenha o slot primeiro
+            // Redesenha o slot
             desenharSlot(x, y, textura);
-
-            // Verifica se o slot já tem uma letra
-            if (linhas[i].slots[j].letra != '\0') {
-                GLuint letraTexture = 0;
-
-                // Atribua a textura de acordo com a letra
-                switch (linhas[i].slots[j].letra) {
-                    case 'a':
-                        letraTexture = letraATexture;
-                        break;
-                    case 'b':
-                        letraTexture = letraBTexture;
-                        break;
-                    // Adicione mais casos conforme necessário
-                    default:
-                        break;
-                }
-
-                // Desenhar a letra sobre o slot
-                desenharLetra(x + 0.05f, y - 0.15f, letraTexture, i, j);
-            }
         }
     }
 }
-
 
 // Função para desenhar a tela de jogo
 void desenhaTelaJogo(GLFWwindow* window) {

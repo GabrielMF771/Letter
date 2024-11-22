@@ -367,16 +367,13 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
                 ocorrencias[i] = '0'; // Resetando as ocorrências
             }
 
-            if (fase >= 5) {
-                captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
-                printf("Tempo parou de contar\n");
-            }
-
             if (fase < 6) {
                 iniciarFase();
             } else if (isInfiniteButtonClicked) {
                 iniciarFase();
             } else {
+                captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
+                printf("Tempo parou de contar\n");
                 telaAtual = MENU;
                 atualizaTela(window);
             }
@@ -403,11 +400,13 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
 
 void iniciarFase() {
     tentativas = 6;
-    if (fase < 6) {
-        // Lógica para iniciar o jogo
+    if (fase == 1){
         printf("Tempo contando\n");
         captura_tempo_inicio(&horas, &minutos, &segundos);
+    }
 
+    if (fase < 6) {
+        // Lógica para iniciar o jogo
         gerarPalavraFases(fase);
         gerarLibrary();
         printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG

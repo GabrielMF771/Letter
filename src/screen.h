@@ -28,9 +28,8 @@ typedef struct Slot {
 #define MAX_LINHAS 6
 
 typedef struct Linha{
-    Slot slots[TAMANHO_LINHA]; // Array de slots, cada um com sua própria letra
-    char estado[TAMANHO_LINHA]; // Estado de cada letra ('2', '1', '0')
-    int atual; // 1 se a linha for a atual, 0 caso contrário
+    char estado[TAMANHO_LINHA];  // Estado de cada letra ('2', '1', '0')
+    int atual;                   // 1 se a linha for a atual, 0 caso contrário
 } Linha;
 
 extern Linha linhas[MAX_LINHAS];
@@ -57,6 +56,30 @@ extern GLuint slotAmareloTexture;
 extern GLuint letraTexture;
 extern GLuint letraATexture;
 extern GLuint letraBTexture;
+extern GLuint letraCTexture;
+extern GLuint letraDTexture;
+extern GLuint letraETexture;
+extern GLuint letraFTexture;
+extern GLuint letraGTexture;
+extern GLuint letraHTexture;
+extern GLuint letraITexture;
+extern GLuint letraJTexture;
+extern GLuint letraKTexture;
+extern GLuint letraLTexture;
+extern GLuint letraMTexture;
+extern GLuint letraNTexture;
+extern GLuint letraOTexture;
+extern GLuint letraPTexture;
+extern GLuint letraQTexture;
+extern GLuint letraRTexture;
+extern GLuint letraSTexture;
+extern GLuint letraTTexture;
+extern GLuint letraUTexture;
+extern GLuint letraVTexture;
+extern GLuint letraWTexture;
+extern GLuint letraXTexture;
+extern GLuint letraYTexture;
+extern GLuint letraZTexture;
 
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
@@ -80,8 +103,6 @@ void atualizaTela(GLFWwindow* window);
 // Funções do jogo
 void desenharSlot(float x, float y, GLuint textura);
 void atualizarOcorrencias();
-void desenharSlot(float x, float y, GLuint textura);
 void desenharSlots();
-void desenharLetra(float x, float y, GLuint textura, int linhaIndex, int slotIndex);
 
 #endif
