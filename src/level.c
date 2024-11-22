@@ -86,7 +86,7 @@ char gerarPalavraFases(int fase){
             }
         }
 
-        // Escolhendo a palavra - variável "escolhida" é global e vai ser usada em todas as fases
+        // Escolhendo a palavra
         srand(time(NULL));
         strcpy(escolhida, plvrDaFase[rand() % j]);  // Garante que a palavra escolhida está dentro do vetor preenchido
     }

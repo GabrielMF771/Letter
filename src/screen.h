@@ -3,18 +3,18 @@
 
 // Definição do enum para controlar o estado do programa
 typedef enum {
-    MENU, // Tela principal do menu
-    JOGO, // Tela do jogo
-    ESTATISTICAS, // Tela de estatísticas
-    VITORIA, // Tela de vitória
-    DERROTA // Tela de derrota
+    MENU,
+    JOGO,
+    ESTATISTICAS,
+    VITORIA,
+    DERROTA
 } Tela;
 
 // Struct dos botões do menu
 typedef struct Button {
-    GLuint texture; // A textura do botão
-    float xPos, yPos; // Posição do centro do botão
-    float width, height; // Tamanho do botão
+    GLuint texture;
+    float xPos, yPos;
+    float width, height;
 } Button;
 
 // Struct dos slots
@@ -35,7 +35,7 @@ typedef struct Linha{
 } Linha;
 
 extern Linha linhas[MAX_LINHAS];
-extern int linha_atual; // Índice da linha atual
+extern int linha_atual;
 
 // Variáveis globais
 extern Tela telaAtual;
