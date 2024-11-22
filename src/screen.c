@@ -49,6 +49,7 @@ GLuint letraWTexture = 0;
 GLuint letraXTexture = 0;
 GLuint letraYTexture = 0;
 GLuint letraZTexture = 0;
+GLuint VazioTexture = 0;
 
 
 // Flags e estados do clique
@@ -166,6 +167,7 @@ void carregaTexturasJogo(){
     letraXTexture = LoadTexture("assets/levels/letters/X.png");
     letraYTexture = LoadTexture("assets/levels/letters/Y.png");
     letraZTexture = LoadTexture("assets/levels/letters/Z.png");
+    VazioTexture = LoadTexture("assets/levels/letters/Vazio.png");
 }
 
 void liberaTexturasJogo(){
@@ -199,6 +201,7 @@ void liberaTexturasJogo(){
     DeleteButtonTexture(&letraXTexture);
     DeleteButtonTexture(&letraYTexture);
     DeleteButtonTexture(&letraZTexture);
+    DeleteButtonTexture(&VazioTexture);
 }
 
 // Função para desenhar o menu principal
@@ -280,6 +283,15 @@ void atualizarOcorrencias() {
     }
 }
 
+void desenharLetra(float x, float y, GLuint textura) {
+    glBindTexture(GL_TEXTURE_2D, textura);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y);
+        glTexCoord2f(1.0f, 0.0f); glVertex2f(x + 0.1f, y);
+        glTexCoord2f(1.0f, 1.0f); glVertex2f(x + 0.1f, y + 0.1f);
+        glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y + 0.1f);
+    glEnd();
+}
 
 void desenharSlot(float x, float y, GLuint textura) {
     glBindTexture(GL_TEXTURE_2D, textura);
@@ -290,12 +302,19 @@ void desenharSlot(float x, float y, GLuint textura) {
         glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y - 0.2f);
     glEnd();
 }
+
+// Variáveis globais para armazenar a última posição da letra
+int ultimaLinha = -1;
+int ultimaColuna = -1;
+
 void desenharSlots() {
     float offsetX = -(TAMANHO_LINHA) * 0.1f;
     float offsetY = (MAX_LINHAS) * 0.1f;
 
     GLuint textura = 0;
+    GLuint texturaLetra = 0;
 
+    // Desenha os slots
     for (int i = 0; i < MAX_LINHAS; i++) {
         float y = offsetY - i * 0.2f;
         for (int j = 0; j < TAMANHO_LINHA; j++) {
@@ -310,6 +329,8 @@ void desenharSlots() {
                     textura = slotAmareloTexture;
                     break;
                 case '0':
+                    textura = slotCinzaTexture;
+                    break;
                 default:
                     textura = slotCinzaTexture;
                     break;
@@ -318,6 +339,78 @@ void desenharSlots() {
             // Redesenha o slot
             desenharSlot(x, y, textura);
         }
+    }
+
+    // Desenha as letras
+    for (int i = 0; i < MAX_LINHAS; i++) {
+        float y = offsetY - i * 0.2f;
+        for (int j = 0; j < TAMANHO_LINHA; j++) {
+            float x = offsetX + j * 0.2f;
+
+            // Escolhe a textura com base na letra
+            switch (linhas[i].letra[j]) {
+                case 'a': texturaLetra = letraATexture; break;
+                case 'b': texturaLetra = letraBTexture; break;
+                case 'c': texturaLetra = letraCTexture; break;
+                case 'd': texturaLetra = letraDTexture; break;
+                case 'e': texturaLetra = letraETexture; break;
+                case 'f': texturaLetra = letraFTexture; break;
+                case 'g': texturaLetra = letraGTexture; break;
+                case 'h': texturaLetra = letraHTexture; break;
+                case 'i': texturaLetra = letraITexture; break;
+                case 'j': texturaLetra = letraJTexture; break;
+                case 'k': texturaLetra = letraKTexture; break;
+                case 'l': texturaLetra = letraLTexture; break;
+                case 'm': texturaLetra = letraMTexture; break;
+                case 'n': texturaLetra = letraNTexture; break;
+                case 'o': texturaLetra = letraOTexture; break;
+                case 'p': texturaLetra = letraPTexture; break;
+                case 'q': texturaLetra = letraQTexture; break;
+                case 'r': texturaLetra = letraRTexture; break;
+                case 's': texturaLetra = letraSTexture; break;
+                case 't': texturaLetra = letraTTexture; break;
+                case 'u': texturaLetra = letraUTexture; break;
+                case 'v': texturaLetra = letraVTexture; break;
+                case 'w': texturaLetra = letraWTexture; break;
+                case 'x': texturaLetra = letraXTexture; break;
+                case 'y': texturaLetra = letraYTexture; break;
+                case 'z': texturaLetra = letraZTexture; break;
+                default: texturaLetra = VazioTexture; break;
+            }
+
+            // Se a textura da letra foi alterada, desenha a letra
+            if (texturaLetra != VazioTexture) {
+                desenharLetra(x + 0.05f, y - 0.15f, texturaLetra);
+
+                // Armazena a última posição da letra
+                ultimaLinha = i;
+                ultimaColuna = j;
+            }
+        }
+    }
+}
+
+// Função para lidar com o backspace
+void backspace() {
+    // Verifica se existe uma letra para apagar
+    if (ultimaLinha != -1 && ultimaColuna != -1) {
+        // Substitui a última letra desenhada por VazioTexture
+        linhas[ultimaLinha].letra[ultimaColuna] = ' ';  // Limpa a letra
+
+        // Redesenha a slot onde a letra foi apagada com a textura do slot original
+        float x = -(TAMANHO_LINHA) * 0.1f + ultimaColuna * 0.2f;
+        float y = (MAX_LINHAS) * 0.1f - ultimaLinha * 0.2f;
+
+        // Redesenha o slot
+        GLuint textura = slotCinzaTexture;  // Ou a textura padrão do slot
+        desenharSlot(x, y, textura);
+
+        // Apaga a letra
+        desenharLetra(x + 0.05f, y - 0.15f, VazioTexture);
+
+        // Reseta a última posição para evitar múltiplos backspaces seguidos
+        ultimaLinha = -1;
+        ultimaColuna = -1;
     }
 }
 

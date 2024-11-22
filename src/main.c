@@ -93,6 +93,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                     }
                     pop(pilha);  // Remove o elemento do topo da pilha
                     mostrarPilha(pilha);
+                    backspace();
                 }
                 break;
 

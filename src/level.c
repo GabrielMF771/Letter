@@ -194,7 +194,11 @@ void mostrarPilha(pilhaLetra *pilha) {
     }
 }
 
+int indiceLinha = 0;
+int indiceSlot = 0;
+
 void push(pilhaLetra *pilha, char letra){
+    indiceLinha = linha_atual;
     int tamanhoPilha = 0;
     slot *atual = pilha->topo;
 
@@ -213,7 +217,9 @@ void push(pilhaLetra *pilha, char letra){
     novoNo->proximo = pilha->topo;
     pilha->topo = novoNo;
 
+    indiceSlot = tamanhoPilha;
     printf("%c", novoNo->letra);
+    linhas[indiceLinha].letra[indiceSlot] = letra;
 }
 
 void pop(pilhaLetra *pilha){

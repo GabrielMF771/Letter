@@ -19,7 +19,6 @@ typedef struct Button {
 typedef struct Slot {
     GLuint texture;
     float width, height;
-    char letra;  // Letra armazenada no slot
     int desenhado;
 } Slot;
 
@@ -30,6 +29,7 @@ typedef struct Slot {
 typedef struct Linha{
     char estado[TAMANHO_LINHA];  // Estado de cada letra ('2', '1', '0')
     int atual;                   // 1 se a linha for a atual, 0 caso contrário
+    char letra[TAMANHO_LINHA]; // Armazena a letra digitada
 } Linha;
 
 extern Linha linhas[MAX_LINHAS];
@@ -80,6 +80,7 @@ extern GLuint letraWTexture;
 extern GLuint letraXTexture;
 extern GLuint letraYTexture;
 extern GLuint letraZTexture;
+extern GLuint VazioTexture;
 
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
@@ -104,5 +105,7 @@ void atualizaTela(GLFWwindow* window);
 void desenharSlot(float x, float y, GLuint textura);
 void atualizarOcorrencias();
 void desenharSlots();
+void desenharLetra(float x, float y, GLuint textura);
+void backspace();
 
 #endif
