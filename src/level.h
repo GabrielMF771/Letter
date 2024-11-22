@@ -1,9 +1,9 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#define MAX_PALAVRAS 2146
+#define MAX_PALAVRAS 2156
 #define MAX_PALAVRASDASFASES 20
-#define MAX_PALAVRASDAFASE6 4292
+#define MAX_PALAVRASDAFASE6 4312
 #define TAMANHO_PALAVRA 6
 
 // Validação da palavra

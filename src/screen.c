@@ -60,6 +60,10 @@ GLuint fase4Texture = 0;
 GLuint fase5Texture = 0;
 GLuint fase6Texture = 0;
 
+// Telas
+GLuint vitoriaTela = 0;
+GLuint derrotaTela = 0;
+
 // Flags e estados do clique
 int mouseButtonPressed = 0;
 int isStartButtonClicked = 0;
@@ -183,6 +187,9 @@ void carregaTexturasJogo(){
     fase4Texture = LoadTexture("assets/levels/Fase4.png");
     fase5Texture = LoadTexture("assets/levels/Fase5.png");
     fase6Texture = LoadTexture("assets/levels/Fase6.png");
+
+    vitoriaTela = LoadTexture("assets/levels/TelaVitoria.png");
+    derrotaTela = LoadTexture("assets/levels/TelaDerrota.png");
 }
 
 void liberaTexturasJogo(){
@@ -224,6 +231,9 @@ void liberaTexturasJogo(){
     DeleteButtonTexture(&fase4Texture);
     DeleteButtonTexture(&fase5Texture);
     DeleteButtonTexture(&fase6Texture);
+
+    DeleteButtonTexture(&vitoriaTela);
+    DeleteButtonTexture(&derrotaTela);
 }
 
 // Função para desenhar o menu principal
@@ -445,6 +455,34 @@ void backspace(int vezes) {
     }
 }
 
+// Função que desenha a tela da vitória
+void desenharVitoria() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    Button Vitoria = {vitoriaTela, 0.0f, 0.0f, 1.5f, 0.8f};
+    DrawButton(Vitoria.texture, Vitoria.xPos - Vitoria.width / 2, Vitoria.yPos - Vitoria.height / 2, Vitoria.width, Vitoria.height);
+    
+    glDisable(GL_BLEND);
+}
+
+// Função que desenha a tela de derrota
+void desenharDerrota() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    Button Derrota = {derrotaTela, 0.0f, 0.0f, 1.5f, 0.8f};
+    DrawButton(Derrota.texture, Derrota.xPos - Derrota.width / 2, Derrota.yPos - Derrota.height / 2, Derrota.width, Derrota.height);
+
+    glDisable(GL_BLEND);
+}
+
 // Função para desenhar a tela de jogo
 void desenhaTelaJogo(GLFWwindow* window) {
     glEnable(GL_BLEND);
@@ -577,6 +615,12 @@ void atualizaTela(GLFWwindow* window) {
             break;
         case ESTATISTICAS:
             desenhaTelaEstatisticas(window);
+            break;
+        case VITORIA:
+            desenharVitoria();
+            break;
+        case DERROTA:
+            desenharDerrota();
             break;
         default:
             break;

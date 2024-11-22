@@ -365,6 +365,7 @@ fenda
 ferir
 feroz
 ferpa
+ferro
 festa
 feudo
 ficar
@@ -399,6 +400,7 @@ fraco
 frase
 frota
 fruir
+fruta
 fruto
 fugaz
 fugir
@@ -543,6 +545,7 @@ locus
 logia
 logos
 logro
+lomba
 longe
 longo
 louca
@@ -689,6 +692,7 @@ pasma
 pasmo
 passa
 passo
+pasta
 patio
 pauta
 pavor
@@ -890,6 +894,7 @@ sitio
 sobre
 socio
 sofia
+solda
 solda
 solta
 solto

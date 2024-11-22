@@ -364,10 +364,6 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
                 fase = 6;
             }
 
-            // Altera a tela atual para o menu
-            telaAtual = JOGO;
-            atualizaTela(window); // Usa a variável global e faz o cast
-
             // Resetando a string ocorrencias
             for (int i = 0; i < 6; i++) {
                 ocorrencias[i] = '0'; // Resetando as ocorrências
@@ -380,7 +376,9 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             } else {
                 captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
                 printf("Tempo parou de contar\n");
-                telaAtual = MENU;
+                
+                // Desenhar a tela de vitória
+                telaAtual = VITORIA;
                 atualizaTela(window);
             }
         }
@@ -397,7 +395,9 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             printf("Voce perdeu! O jogo esta sendo reiniciado.\n");
             tentativas = 6; // Reseta o número de tentativas
             fase = 1; // Reseta a fase
-            telaAtual = MENU;
+
+            // Desenhar a tela de derrota
+            telaAtual = DERROTA;
             atualizaTela(window);
         }
 

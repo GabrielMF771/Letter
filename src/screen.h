@@ -5,7 +5,9 @@
 typedef enum {
     MENU, // Tela principal do menu
     JOGO, // Tela do jogo
-    ESTATISTICAS // Tela de estatísticas
+    ESTATISTICAS, // Tela de estatísticas
+    VITORIA, // Tela de vitória
+    DERROTA // Tela de derrota
 } Tela;
 
 // Struct dos botões do menu
@@ -90,6 +92,10 @@ extern GLuint fase4Texture;
 extern GLuint fase5Texture;
 extern GLuint fase6Texture;
 
+// Telas
+extern GLuint vitoriaTela;
+extern GLuint derrotaTela;
+
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
 extern const GLuint HEIGHT;
@@ -115,5 +121,8 @@ void atualizarOcorrencias();
 void desenharSlots();
 void desenharLetra(float x, float y, GLuint textura);
 void backspace();
+
+void desenharVitoria();
+void desenharDerrota();
 
 #endif
