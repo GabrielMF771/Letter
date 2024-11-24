@@ -62,16 +62,21 @@ char gerarPalavraFases(int fase){
         // Ajusta as alocações, coloca 1 palavra em cada vetor da library
         int j = 0;
         for(i = 0; i < MAX_PALAVRASDAFASE6; i++){
-            if(i % 2 == 0){
+            if(strlen(auxDaFase6[i]) > 0) {
                 strcpy(plvrDaFase6[j], auxDaFase6[i]);
                 j++;
             }
         }
 
         srand(time(NULL));
-        strcpy(escolhida, plvrDaFase6[rand() % j]); // Garante que a palavra escolhida está dentro do vetor preenchido
+        if (j > 0) {
+            strcpy(escolhida, plvrDaFase6[rand() % j]); // Garante que a palavra escolhida está dentro do vetor preenchido
+        } else {
+            printf("Erro: Nenhuma palavra válida encontrada na fase 6.\n");
+            exit(EXIT_FAILURE);
+        }
     } else {
-        //aloca no auxiliar
+        // Código para as outras fases
         int i = 0;
         while(fgets(auxDaFase[i], TAMANHO_PALAVRA, file)!= NULL && i < MAX_PALAVRASDASFASES){
             auxDaFase[i][strcspn(auxDaFase[i], "\n")] = '\0';  // Remove o '\n' no final
@@ -388,6 +393,19 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
 
     // Se não houver tentativas restantes, o jogador perde
         if (tentativas == 0 && !verificaVitoria(ocorrencias)) {
+            if(fase >= 6){
+                printf("Voce perdeu! O jogo esta sendo reiniciado.\n");
+                tentativas = 6; // Reseta o número de tentativas
+
+                // Desenhar a tela de derrota
+                telaAtual = DERROTA;
+                atualizaTela(window);
+
+                // Limpa a pilha após o processamento
+                limparPilha(pilha);
+
+                return;
+            }
             printf("Voce perdeu! O jogo esta sendo reiniciado.\n");
             tentativas = 6; // Reseta o número de tentativas
             fase = 1; // Reseta a fase
