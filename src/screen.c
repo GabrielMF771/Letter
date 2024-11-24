@@ -16,7 +16,11 @@ GLuint startButtonTexture = 0;
 GLuint statsButtonTexture = 0;
 GLuint infiniteButtonTexture = 0;
 GLuint menuButtonTexture = 0;
+GLuint creditosButtonTexture = 0;
 GLuint TituloTexture = 0;
+
+GLuint estatisticasTexto = 0;
+GLuint estatisticasTittle = 0;
 
 // Variaveis de textura do jogo
 GLuint slotCinzaTexture = 0;
@@ -63,6 +67,7 @@ GLuint fase6Texture = 0;
 // Telas
 GLuint vitoriaTela = 0;
 GLuint derrotaTela = 0;
+GLuint creditosTela = 0;
 
 // Flags e estados do clique
 int mouseButtonPressed = 0;
@@ -70,6 +75,7 @@ int isStartButtonClicked = 0;
 int isStatsButtonClicked = 0;
 int isMenuButtonClicked = 0;
 int isInfiniteButtonClicked = 0;
+int isCreditsButtonClicked = 0;
 
 int linha_atual = 0; // Índice da linha atual
 Linha linhas[MAX_LINHAS];
@@ -125,7 +131,7 @@ void DrawButton(GLuint texture, float x, float y, float width, float height) {
     glEnd();
 }
 
-void DeleteButtonTexture(GLuint* texture) {
+void DeleteTexture(GLuint* texture) {
     if (texture && *texture != 0) {
         glDeleteTextures(1, texture); // Libera o ID da textura
         *texture = 0; // Marca como não utilizada
@@ -136,16 +142,27 @@ void carregaTexturasMenu() {
     statsButtonTexture = LoadTexture("assets/main-menu/EstatisticasBotao.png");
     startButtonTexture = LoadTexture("assets/main-menu/IniciarBotao.png");
     menuButtonTexture = LoadTexture("assets/main-menu/MenuBotao.png");
+    creditosButtonTexture = LoadTexture("assets/main-menu/CreditosBotao.png");
     infiniteButtonTexture = LoadTexture("assets/main-menu/InfinitoBotao.png");
     TituloTexture = LoadTexture("assets/main-menu/Titulo.png");
+
+    estatisticasTittle = LoadTexture("assets/score/Estatisticas.png");
+    estatisticasTexto = LoadTexture("assets/score/TelaEstatisticas.png");
+
+    creditosTela = LoadTexture("assets/screen/TelaCreditos.png");
 }
 
 void liberaTexturasMenu() {
-    DeleteButtonTexture(&statsButtonTexture);
-    DeleteButtonTexture(&startButtonTexture);
-    DeleteButtonTexture(&infiniteButtonTexture);
-    DeleteButtonTexture(&menuButtonTexture);
-    DeleteButtonTexture(&TituloTexture);
+    DeleteTexture(&statsButtonTexture);
+    DeleteTexture(&startButtonTexture);
+    DeleteTexture(&infiniteButtonTexture);
+    DeleteTexture(&menuButtonTexture);
+    DeleteTexture(&TituloTexture);
+
+    DeleteTexture(&estatisticasTittle);
+    DeleteTexture(&estatisticasTexto);
+
+    DeleteTexture(&creditosTela);
 }
 
 void carregaTexturasJogo(){
@@ -188,52 +205,52 @@ void carregaTexturasJogo(){
     fase5Texture = LoadTexture("assets/levels/Fase5.png");
     fase6Texture = LoadTexture("assets/levels/Fase6.png");
 
-    vitoriaTela = LoadTexture("assets/levels/TelaVitoria.png");
-    derrotaTela = LoadTexture("assets/levels/TelaDerrota.png");
+    vitoriaTela = LoadTexture("assets/screen/TelaVitoria.png");
+    derrotaTela = LoadTexture("assets/screen/TelaDerrota.png");
 }
 
 void liberaTexturasJogo(){
-    DeleteButtonTexture(&slotCinzaTexture);
-    DeleteButtonTexture(&slotAmareloTexture);
-    DeleteButtonTexture(&slotVerdeTexture);
+    DeleteTexture(&slotCinzaTexture);
+    DeleteTexture(&slotAmareloTexture);
+    DeleteTexture(&slotVerdeTexture);
 
-    DeleteButtonTexture(&letraATexture);
-    DeleteButtonTexture(&letraBTexture);
-    DeleteButtonTexture(&letraCTexture);
-    DeleteButtonTexture(&letraDTexture);
-    DeleteButtonTexture(&letraETexture);
-    DeleteButtonTexture(&letraFTexture);
-    DeleteButtonTexture(&letraGTexture);
-    DeleteButtonTexture(&letraHTexture);
-    DeleteButtonTexture(&letraITexture);
-    DeleteButtonTexture(&letraJTexture);
-    DeleteButtonTexture(&letraKTexture);
-    DeleteButtonTexture(&letraLTexture);
-    DeleteButtonTexture(&letraMTexture);
-    DeleteButtonTexture(&letraNTexture);
-    DeleteButtonTexture(&letraOTexture);
-    DeleteButtonTexture(&letraPTexture);
-    DeleteButtonTexture(&letraQTexture);
-    DeleteButtonTexture(&letraRTexture);
-    DeleteButtonTexture(&letraSTexture);
-    DeleteButtonTexture(&letraTTexture);
-    DeleteButtonTexture(&letraUTexture);
-    DeleteButtonTexture(&letraVTexture);
-    DeleteButtonTexture(&letraWTexture);
-    DeleteButtonTexture(&letraXTexture);
-    DeleteButtonTexture(&letraYTexture);
-    DeleteButtonTexture(&letraZTexture);
-    DeleteButtonTexture(&VazioTexture);
+    DeleteTexture(&letraATexture);
+    DeleteTexture(&letraBTexture);
+    DeleteTexture(&letraCTexture);
+    DeleteTexture(&letraDTexture);
+    DeleteTexture(&letraETexture);
+    DeleteTexture(&letraFTexture);
+    DeleteTexture(&letraGTexture);
+    DeleteTexture(&letraHTexture);
+    DeleteTexture(&letraITexture);
+    DeleteTexture(&letraJTexture);
+    DeleteTexture(&letraKTexture);
+    DeleteTexture(&letraLTexture);
+    DeleteTexture(&letraMTexture);
+    DeleteTexture(&letraNTexture);
+    DeleteTexture(&letraOTexture);
+    DeleteTexture(&letraPTexture);
+    DeleteTexture(&letraQTexture);
+    DeleteTexture(&letraRTexture);
+    DeleteTexture(&letraSTexture);
+    DeleteTexture(&letraTTexture);
+    DeleteTexture(&letraUTexture);
+    DeleteTexture(&letraVTexture);
+    DeleteTexture(&letraWTexture);
+    DeleteTexture(&letraXTexture);
+    DeleteTexture(&letraYTexture);
+    DeleteTexture(&letraZTexture);
+    DeleteTexture(&VazioTexture);
 
-    DeleteButtonTexture(&fase1Texture);
-    DeleteButtonTexture(&fase2Texture);
-    DeleteButtonTexture(&fase3Texture);
-    DeleteButtonTexture(&fase4Texture);
-    DeleteButtonTexture(&fase5Texture);
-    DeleteButtonTexture(&fase6Texture);
+    DeleteTexture(&fase1Texture);
+    DeleteTexture(&fase2Texture);
+    DeleteTexture(&fase3Texture);
+    DeleteTexture(&fase4Texture);
+    DeleteTexture(&fase5Texture);
+    DeleteTexture(&fase6Texture);
 
-    DeleteButtonTexture(&vitoriaTela);
-    DeleteButtonTexture(&derrotaTela);
+    DeleteTexture(&vitoriaTela);
+    DeleteTexture(&derrotaTela);
 }
 
 // Função para desenhar o menu principal
@@ -245,12 +262,13 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Criar os botões
-    Button tittleButton = {TituloTexture, 0.0f, 0.3f, 1.0f, 0.42f};
-    Button startButton = {startButtonTexture, 0.0f, -0.2f, 0.6f, 0.22f};
-    Button statsButton = {statsButtonTexture, 0.0f, -0.45f, 0.6f, 0.22f};
+    Button tittleButton = {TituloTexture, 0.0f, 0.35f, 1.0f, 0.42f};
+    Button startButton = {startButtonTexture, 0.0f, -0.10f, 0.6f, 0.22f};
+    Button statsButton = {statsButtonTexture, 0.0f, -0.35f, 0.6f, 0.22f};
+    Button creditosButton = {creditosButtonTexture, 0.0f, -0.90f, 0.6f, 0.22f};
     
     // Criar o botão "Modo Infinito" somente se a fase >= 6
-    Button infiniteButton = {infiniteButtonTexture, 0.0f, -0.70f, 0.6f, 0.22f};
+    Button infiniteButton = {infiniteButtonTexture, 0.0f, -0.60f, 0.6f, 0.22f};
     if (fase >= 6) {
         DrawButton(infiniteButton.texture, infiniteButton.xPos - infiniteButton.width / 2, infiniteButton.yPos - infiniteButton.height / 2, infiniteButton.width, infiniteButton.height);
     }
@@ -259,6 +277,7 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
     DrawButton(tittleButton.texture, tittleButton.xPos - tittleButton.width / 2, tittleButton.yPos - tittleButton.height / 2, tittleButton.width, tittleButton.height);
     DrawButton(startButton.texture, startButton.xPos - startButton.width / 2, startButton.yPos - startButton.height / 2, startButton.width, startButton.height);
     DrawButton(statsButton.texture, statsButton.xPos - statsButton.width / 2, statsButton.yPos - statsButton.height / 2, statsButton.width, statsButton.height);
+    DrawButton(creditosButton.texture, creditosButton.xPos - creditosButton.width / 2, creditosButton.yPos - creditosButton.height / 2, creditosButton.width, creditosButton.height);
 
     // Verificar se algum botão foi clicado
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
@@ -268,7 +287,6 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
         // Verificar clique no botão "Modo Infinito" se a fase >= 6
         if (fase >= 6 && isButtonClicked(infiniteButton, xpos, ypos, WIDTH, HEIGHT)) {
             if (!isInfiniteButtonClicked) {
-                printf("Modo Infinito pressionado!\n");
                 isInfiniteButtonClicked = 1;
                 telaAtual = JOGO;
                 iniciarFase();
@@ -277,18 +295,16 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
 
         // Verificar se o clique está no botão "Estatísticas"
         if (isButtonClicked(statsButton, xpos, ypos, WIDTH, HEIGHT) && !isStatsButtonClicked) {
-            printf("Estatisticas pressionado!\n");
             isStatsButtonClicked = 1;
             telaAtual = ESTATISTICAS;
-            // Lógica para exibir as estatísticas
+            atualizaTela(window);
 
-            printf("\nTempo decorrido: %02dh%02dm%02ds\n", horas, minutos, segundos); // DEBUG
+            lerArquivoScore();
             
         }
         
         // Verificar se o clique está no botão "Iniciar Jogo"
         if (isButtonClicked(startButton, xpos, ypos, WIDTH, HEIGHT) && !isStartButtonClicked) {
-            printf("\nIniciar Jogo pressionado!\n");
             isStartButtonClicked = 1;
             if(fase < 6){
                 iniciarFase();
@@ -296,6 +312,13 @@ void desenhaMenuPrincipal(GLFWwindow* window) {
                 printf("Utilize o modo infinito!\n");
             }
             
+        }
+
+        // Verificar se o clique está no botão "Créditos"
+        if (isButtonClicked(creditosButton, xpos, ypos, WIDTH, HEIGHT) && !isCreditsButtonClicked) {
+            isCreditsButtonClicked = 1;
+            telaAtual = CREDITOS;
+            atualizaTela(window);   
         }
     }
 
@@ -338,89 +361,6 @@ void desenharSlot(float x, float y, GLuint textura) {
 // Variáveis globais para armazenar a última posição da letra
 int ultimaLinha = -1;
 int ultimaColuna = -1;
-
-void desenharSlots() {
-    float offsetX = -(TAMANHO_LINHA) * 0.1f;
-    float offsetY = (MAX_LINHAS) * 0.1f;
-
-    GLuint textura = 0;
-    GLuint texturaLetra = 0;
-
-    // Desenha os slots
-    for (int i = 0; i < MAX_LINHAS; i++) {
-        float y = offsetY - i * 0.2f;
-        for (int j = 0; j < TAMANHO_LINHA; j++) {
-            float x = offsetX + j * 0.2f;
-
-            // Escolhe a textura com base no estado
-            switch (linhas[i].estado[j]) {
-                case '2':
-                    textura = slotVerdeTexture;
-                    break;
-                case '1':
-                    textura = slotAmareloTexture;
-                    break;
-                case '0':
-                    textura = slotCinzaTexture;
-                    break;
-                default:
-                    textura = slotCinzaTexture;
-                    break;
-            }
-
-            // Redesenha o slot
-            desenharSlot(x, y, textura);
-        }
-    }
-
-    // Desenha as letras
-    for (int i = 0; i < MAX_LINHAS; i++) {
-        float y = offsetY - i * 0.2f;
-        for (int j = 0; j < TAMANHO_LINHA; j++) {
-            float x = offsetX + j * 0.2f;
-
-            // Escolhe a textura com base na letra
-            switch (linhas[i].letra[j]) {
-                case 'a': texturaLetra = letraATexture; break;
-                case 'b': texturaLetra = letraBTexture; break;
-                case 'c': texturaLetra = letraCTexture; break;
-                case 'd': texturaLetra = letraDTexture; break;
-                case 'e': texturaLetra = letraETexture; break;
-                case 'f': texturaLetra = letraFTexture; break;
-                case 'g': texturaLetra = letraGTexture; break;
-                case 'h': texturaLetra = letraHTexture; break;
-                case 'i': texturaLetra = letraITexture; break;
-                case 'j': texturaLetra = letraJTexture; break;
-                case 'k': texturaLetra = letraKTexture; break;
-                case 'l': texturaLetra = letraLTexture; break;
-                case 'm': texturaLetra = letraMTexture; break;
-                case 'n': texturaLetra = letraNTexture; break;
-                case 'o': texturaLetra = letraOTexture; break;
-                case 'p': texturaLetra = letraPTexture; break;
-                case 'q': texturaLetra = letraQTexture; break;
-                case 'r': texturaLetra = letraRTexture; break;
-                case 's': texturaLetra = letraSTexture; break;
-                case 't': texturaLetra = letraTTexture; break;
-                case 'u': texturaLetra = letraUTexture; break;
-                case 'v': texturaLetra = letraVTexture; break;
-                case 'w': texturaLetra = letraWTexture; break;
-                case 'x': texturaLetra = letraXTexture; break;
-                case 'y': texturaLetra = letraYTexture; break;
-                case 'z': texturaLetra = letraZTexture; break;
-                default: texturaLetra = VazioTexture; break;
-            }
-
-            // Desenha a letra
-            if (texturaLetra != VazioTexture) {
-                desenharLetra(x + 0.05f, y - 0.15f, texturaLetra);
-
-                // Armazena a última posição da letra
-                ultimaLinha = i;
-                ultimaColuna = j;
-            }
-        }
-    }
-}
 
 // Função que apaga uma letra da tela
 void backspace(int vezes) {
@@ -481,6 +421,87 @@ void desenharDerrota() {
     DrawButton(Derrota.texture, Derrota.xPos - Derrota.width / 2, Derrota.yPos - Derrota.height / 2, Derrota.width, Derrota.height);
 
     glDisable(GL_BLEND);
+}
+
+void desenharSlots() {
+    float offsetX = -(TAMANHO_LINHA) * 0.1f;
+    float offsetY = (MAX_LINHAS) * 0.1f;
+
+    GLuint textura = 0;
+    GLuint texturaLetra = 0;
+
+    // Desenha os slots
+    for (int i = 0; i < MAX_LINHAS; i++) {
+        float y = offsetY - i * 0.2f;
+        for (int j = 0; j < TAMANHO_LINHA; j++) {
+            float x = offsetX + j * 0.2f;
+                switch (linhas[i].estado[j]) {
+                    case '2':
+                        textura = slotVerdeTexture;
+                        break;
+                    case '1':
+                        textura = slotAmareloTexture;
+                        break;
+                    case '0':
+                        textura = slotCinzaTexture;
+                        break;
+                    default:
+                        textura = slotCinzaTexture;
+                        break;
+                }
+
+            // Redesenha o slot
+            desenharSlot(x, y, textura);
+        }
+    }
+
+    // Desenha as letras
+    for (int i = 0; i < MAX_LINHAS; i++) {
+        float y = offsetY - i * 0.2f;
+        for (int j = 0; j < TAMANHO_LINHA; j++) {
+            float x = offsetX + j * 0.2f;
+
+            // Escolhe a textura com base na letra
+            switch (linhas[i].letra[j]) {
+                case 'a': texturaLetra = letraATexture; break;
+                case 'b': texturaLetra = letraBTexture; break;
+                case 'c': texturaLetra = letraCTexture; break;
+                case 'd': texturaLetra = letraDTexture; break;
+                case 'e': texturaLetra = letraETexture; break;
+                case 'f': texturaLetra = letraFTexture; break;
+                case 'g': texturaLetra = letraGTexture; break;
+                case 'h': texturaLetra = letraHTexture; break;
+                case 'i': texturaLetra = letraITexture; break;
+                case 'j': texturaLetra = letraJTexture; break;
+                case 'k': texturaLetra = letraKTexture; break;
+                case 'l': texturaLetra = letraLTexture; break;
+                case 'm': texturaLetra = letraMTexture; break;
+                case 'n': texturaLetra = letraNTexture; break;
+                case 'o': texturaLetra = letraOTexture; break;
+                case 'p': texturaLetra = letraPTexture; break;
+                case 'q': texturaLetra = letraQTexture; break;
+                case 'r': texturaLetra = letraRTexture; break;
+                case 's': texturaLetra = letraSTexture; break;
+                case 't': texturaLetra = letraTTexture; break;
+                case 'u': texturaLetra = letraUTexture; break;
+                case 'v': texturaLetra = letraVTexture; break;
+                case 'w': texturaLetra = letraWTexture; break;
+                case 'x': texturaLetra = letraXTexture; break;
+                case 'y': texturaLetra = letraYTexture; break;
+                case 'z': texturaLetra = letraZTexture; break;
+                default: texturaLetra = VazioTexture; break;
+            }
+
+            // Desenha a letra
+            if (texturaLetra != VazioTexture) {
+                desenharLetra(x + 0.05f, y - 0.15f, texturaLetra);
+
+                // Armazena a última posição da letra
+                ultimaLinha = i;
+                ultimaColuna = j;
+            }
+        }
+    }
 }
 
 // Função para desenhar a tela de jogo
@@ -592,6 +613,54 @@ void desenhaTelaEstatisticas(GLFWwindow* window) {
         mouseButtonPressed = 0;  // Botão liberado
     }
 
+    // Título
+    Button Titulo = {estatisticasTittle, 0.0f, 0.78f, 0.95f, 0.20f};
+    DrawButton(Titulo.texture, Titulo.xPos - Titulo.width / 2, Titulo.yPos - Titulo.height / 2, Titulo.width, Titulo.height);
+
+    // Texto
+    Button Texto = {estatisticasTexto, 0.0f, 0.0f, 1.5f, 0.8f};
+    DrawButton(Texto.texture, Texto.xPos - Texto.width / 2, Texto.yPos - Texto.height / 2, Texto.width, Texto.height);
+
+    glDisable(GL_BLEND);
+}
+
+void desenharCreditos(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glClearColor(1.0f, 0.91f, 0.73f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    //Cria o botão
+    Button menuButton = {menuButtonTexture, -0.88f, 0.88f, 0.2f, 0.2f};
+    
+    // Desenha o botão
+    DrawButton(menuButton.texture, menuButton.xPos - menuButton.width / 2, menuButton.yPos - menuButton.height / 2, menuButton.width, menuButton.height);
+
+    // Verificar se algum botão foi clicado
+    int currentMouseState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+    if (currentMouseState == GLFW_PRESS && mouseButtonPressed == 0) {
+        mouseButtonPressed = 1;  // Botão pressionado
+
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        // Verificar se o clique está no botão "Menu"
+        if (isButtonClicked(menuButton, xpos, ypos, WIDTH, HEIGHT) && !isMenuButtonClicked) {
+            isMenuButtonClicked = 1;
+            telaAtual = MENU;
+            atualizaTela(window);
+        }
+    }
+
+    if (currentMouseState == GLFW_RELEASE) {
+        mouseButtonPressed = 0;  // Botão liberado
+    }
+
+    // Texto
+    Button Creditos = {creditosTela, 0.0f, 0.0f, 1.5f, 0.85f};
+    DrawButton(Creditos.texture, Creditos.xPos - Creditos.width / 2, Creditos.yPos - Creditos.height / 2, Creditos.width, Creditos.height);
+
     glDisable(GL_BLEND);
 }
 
@@ -621,6 +690,11 @@ void atualizaTela(GLFWwindow* window) {
             break;
         case DERROTA:
             desenharDerrota();
+            break;
+        case CREDITOS:
+            desenharCreditos();
+            isCreditsButtonClicked = 0;
+            mouseButtonPressed = 0;
             break;
         default:
             break;

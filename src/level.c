@@ -14,6 +14,9 @@ char auxDaFase6[MAX_PALAVRASDAFASE6][TAMANHO_PALAVRA];
 //var q armazena a palavra da fase atual
 char escolhida[6];
 
+// Variavel para mostrar a resposta da fase
+int mostrarResposta = 0;
+
 //recebe o numero da fase
 char gerarPalavraFases(int fase){
 
@@ -46,8 +49,6 @@ char gerarPalavraFases(int fase){
     if(file == NULL){
         printf("Erro ao abrir txt da fase\n");
         exit(EXIT_FAILURE);
-    } else {
-        printf("Txt da fase aberto com sucesso\n");
     }
 
     if(fase == 6){
@@ -101,8 +102,6 @@ void gerarLibrary() {
     if(file == NULL){
         printf("Erro ao abrir txt da library\n");
         exit(EXIT_FAILURE);
-    } else {
-        printf("Txt da library aberto com sucesso\n");
     }
 
     //aloca no auxiliar
@@ -208,17 +207,11 @@ void push(pilhaLetra *pilha, char letra){
         atual = atual->proximo;
     }
 
-    if (tamanhoPilha >= LIMITE_PILHA) {
-        printf(" \n");
-        return;
-    }
-
     slot *novoNo = criarNo(letra);
     novoNo->proximo = pilha->topo;
     pilha->topo = novoNo;
 
     indiceSlot = tamanhoPilha;
-    printf("%c", novoNo->letra);
     linhas[indiceLinha].letra[indiceSlot] = letra;
 }
 
@@ -333,7 +326,6 @@ int tentativas = 6; // Inicializa as tentativas
 void verificacao(const char* escolhida, pilhaLetra* pilha) {
     // Converte a pilha para string
     char* string = pilhaParaString(pilha);
-    printf("\nPilha convertida para string: %s\n", string);
 
     // Verifica se a palavra está na biblioteca
     int resultado = buscarNaLibrary(string, 1073, 0, 0);
@@ -376,11 +368,15 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             } else {
                 captura_tempo_final_e_calcula(&horas, &minutos, &segundos);
                 printf("Tempo parou de contar\n");
+                escreverArquivoScore(horas, minutos, segundos);
                 
                 // Desenhar a tela de vitória
                 telaAtual = VITORIA;
                 atualizaTela(window);
             }
+            // Limpa a pilha após o processamento
+            limparPilha(pilha);
+            return;
         }
     } else {
         printf("Palavra não encontrada\n\n");
@@ -391,7 +387,7 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
     }
 
     // Se não houver tentativas restantes, o jogador perde
-        if (tentativas == 0) {
+        if (tentativas == 0 && !verificaVitoria(ocorrencias)) {
             printf("Voce perdeu! O jogo esta sendo reiniciado.\n");
             tentativas = 6; // Reseta o número de tentativas
             fase = 1; // Reseta a fase
@@ -416,7 +412,10 @@ void iniciarFase() {
         // Lógica para iniciar o jogo
         gerarPalavraFases(fase);
         gerarLibrary();
-        printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+
+        if (mostrarResposta == 1){
+            printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+        }
 
         // Resetando as ocorrências e as linhas
         linha_atual = 0; // Resetando a linha atual
@@ -430,7 +429,10 @@ void iniciarFase() {
     } else {
         gerarPalavraFases(fase);
         gerarLibrary();
-        printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+        
+        if (mostrarResposta == 1){
+            printf("\nA palavra escolhida para a fase %d foi [%s]\n", fase, escolhida); // DEBUG
+        }
 
         // Resetando as ocorrências e as linhas
         linha_atual = 0;  // Resetando a linha atual

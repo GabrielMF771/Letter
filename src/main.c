@@ -99,12 +99,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 printf("\nFase alterada para %d\n", fase);
                 isStartButtonClicked = 0;
                 break;
+            case GLFW_KEY_DOWN:
+                limparArquivoScore();
+                break;
 
             case GLFW_KEY_ESCAPE:
                 if (telaAtual != MENU) {
                     telaAtual = MENU;  // Vai para a tela de menu
                     atualizaTela(window);
-                    printf("Menu Principal\n");
                 } else {
                     glfwSetWindowShouldClose(window, 1);
                 }
@@ -113,6 +115,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             case GLFW_KEY_ENTER:
                 if (telaAtual == JOGO) {
                     verificacao(escolhida, pilha);
+                    break;
+                }
+
+            case GLFW_KEY_PAGE_UP:
+                if (mostrarResposta == 0) {
+                    mostrarResposta = 1;
+                    printf("\nMostrar Resposta Habilitado!\n");
+                    break;
+                } else {
+                    mostrarResposta = 0;
+                    printf("\nMostrar Resposta Desabilitado!\n");
                     break;
                 }
 

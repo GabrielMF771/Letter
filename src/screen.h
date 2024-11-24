@@ -7,7 +7,8 @@ typedef enum {
     JOGO,
     ESTATISTICAS,
     VITORIA,
-    DERROTA
+    DERROTA,
+    CREDITOS
 } Tela;
 
 // Struct dos botões do menu
@@ -21,7 +22,6 @@ typedef struct Button {
 typedef struct Slot {
     GLuint texture;
     float width, height;
-    int desenhado;
 } Slot;
 
 // Struct das linhas
@@ -46,7 +46,12 @@ extern int isStartButtonClicked;
 extern GLuint startButtonTexture;
 extern GLuint statsButtonTexture;
 extern GLuint infiniteButtonTexture;
+extern GLuint creditosButtonTexture;
 extern GLuint TituloTexture;
+
+// Texturas - Estatisticas
+extern GLuint estatisticasTittle;
+extern GLuint estatisticasTexto;
 
 // Texturas - Jogo
 extern GLuint menuButtonTexture;
@@ -95,6 +100,7 @@ extern GLuint fase6Texture;
 // Telas
 extern GLuint vitoriaTela;
 extern GLuint derrotaTela;
+extern GLuint creditosTela;
 
 // Variáveis externas para o tamanho da tela
 extern const GLuint WIDTH;
@@ -102,7 +108,7 @@ extern const GLuint HEIGHT;
 
 // Funções dos botões
 int isButtonClicked(Button button, double mouseX, double mouseY, int windowWidth, int windowHeight);
-void DeleteButtonTexture(GLuint* texture);
+void DeleteTexture(GLuint* texture);
 void carregaTexturasMenu();
 void carregaTexturasJogo();
 void liberaTexturasMenu();
@@ -124,5 +130,6 @@ void backspace();
 
 void desenharVitoria();
 void desenharDerrota();
+void desenharCreditos();
 
 #endif

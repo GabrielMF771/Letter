@@ -50,3 +50,11 @@ make run
 ```
 
 O programa irá ser compilado e executado automáticamente.
+
+## Opções de Desenvolvedor
+
+- **Seta para cima:** Alterna entre fase 1 e fase 6
+
+- **Seta para baixo:** Limpa as estatísticas salvas
+
+- **Page Up:** Habilita e desabilita mostrar a resposta da fase no console

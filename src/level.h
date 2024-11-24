@@ -11,6 +11,8 @@ char gerarPalavraFases(int fase);
 void gerarLibrary();
 int buscarNaLibrary(char palavrateste[], int final, int meio, int inicio);
 
+extern int mostrarResposta;
+
 // Variavel global das ocorrências
 extern char ocorrencias[6];
 
