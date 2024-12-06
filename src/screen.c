@@ -26,6 +26,7 @@ GLuint estatisticasTittle = 0;
 GLuint slotCinzaTexture = 0;
 GLuint slotAmareloTexture = 0;
 GLuint slotVerdeTexture = 0;
+GLuint slotAtualTexture = 0;
 
 // Letras
 GLuint letraATexture = 0;
@@ -63,6 +64,8 @@ GLuint fase3Texture = 0;
 GLuint fase4Texture = 0;
 GLuint fase5Texture = 0;
 GLuint fase6Texture = 0;
+
+GLuint PalavraErroTexture = 0;
 
 // Telas
 GLuint vitoriaTela = 0;
@@ -169,6 +172,7 @@ void carregaTexturasJogo(){
     slotCinzaTexture = LoadTexture("assets/levels/SlotCinza.png");
     slotAmareloTexture = LoadTexture("assets/levels/SlotAmarelo.png");
     slotVerdeTexture = LoadTexture("assets/levels/SlotVerde.png");
+    slotAtualTexture = LoadTexture("assets/levels/SlotAtual.png");
 
     letraATexture = LoadTexture("assets/levels/letters/A.png");
     letraBTexture = LoadTexture("assets/levels/letters/B.png");
@@ -205,6 +209,8 @@ void carregaTexturasJogo(){
     fase5Texture = LoadTexture("assets/levels/Fase5.png");
     fase6Texture = LoadTexture("assets/levels/Fase6.png");
 
+    PalavraErroTexture = LoadTexture("assets/levels/PalavraNaoEncontrada.png");
+
     vitoriaTela = LoadTexture("assets/screen/TelaVitoria.png");
     derrotaTela = LoadTexture("assets/screen/TelaDerrota.png");
 }
@@ -213,6 +219,7 @@ void liberaTexturasJogo(){
     DeleteTexture(&slotCinzaTexture);
     DeleteTexture(&slotAmareloTexture);
     DeleteTexture(&slotVerdeTexture);
+    DeleteTexture(&slotAtualTexture);
 
     DeleteTexture(&letraATexture);
     DeleteTexture(&letraBTexture);
@@ -248,6 +255,8 @@ void liberaTexturasJogo(){
     DeleteTexture(&fase4Texture);
     DeleteTexture(&fase5Texture);
     DeleteTexture(&fase6Texture);
+
+    DeleteTexture(&PalavraErroTexture);
 
     DeleteTexture(&vitoriaTela);
     DeleteTexture(&derrotaTela);
@@ -423,6 +432,8 @@ void desenharDerrota() {
     glDisable(GL_BLEND);
 }
 
+int coluna_atual = 0;
+
 void desenharSlots() {
     float offsetX = -(TAMANHO_LINHA) * 0.1f;
     float offsetY = (MAX_LINHAS) * 0.1f;
@@ -435,6 +446,12 @@ void desenharSlots() {
         float y = offsetY - i * 0.2f;
         for (int j = 0; j < TAMANHO_LINHA; j++) {
             float x = offsetX + j * 0.2f;
+
+            // Verifica se o slot atual precisa de textura especial
+            if (i == linha_atual && j == coluna_atual) {
+                textura = slotAtualTexture; // Textura especial para o slot ativo
+            } else {
+                // Define a textura com base no estado
                 switch (linhas[i].estado[j]) {
                     case '2':
                         textura = slotVerdeTexture;
@@ -449,6 +466,7 @@ void desenharSlots() {
                         textura = slotCinzaTexture;
                         break;
                 }
+            }
 
             // Redesenha o slot
             desenharSlot(x, y, textura);
@@ -503,6 +521,10 @@ void desenharSlots() {
         }
     }
 }
+
+
+double tempoErroInicio = 0.0;
+int mostrarErro = 0;
 
 // Função para desenhar a tela de jogo
 void desenhaTelaJogo(GLFWwindow* window) {
@@ -575,6 +597,16 @@ void desenhaTelaJogo(GLFWwindow* window) {
 
     Button FaseButton = {faseTexture, 0.0f, 0.78f, 0.7f, 0.25f};
     DrawButton(FaseButton.texture, FaseButton.xPos - FaseButton.width / 2, FaseButton.yPos - FaseButton.height / 2, FaseButton.width, FaseButton.height);
+
+    // Lógica para exibir mensagem de erro por 1,5 segundos
+    if (mostrarErro) {
+        double tempoAtual = glfwGetTime();
+        if (tempoAtual - tempoErroInicio < 1.5) {
+            desenharPalavraErro(); // Chama a função para exibir a mensagem
+        } else {
+            mostrarErro = 0; // Desativa após o tempo
+        }
+    }
 
     glDisable(GL_BLEND);
 }
@@ -662,6 +694,13 @@ void desenharCreditos(){
     DrawButton(Creditos.texture, Creditos.xPos - Creditos.width / 2, Creditos.yPos - Creditos.height / 2, Creditos.width, Creditos.height);
 
     glDisable(GL_BLEND);
+}
+
+void desenharPalavraErro(){
+
+    Button Erro = {PalavraErroTexture, 0.0f, -0.7f, 1.0f, 0.1f};
+    DrawButton(Erro.texture, Erro.xPos - Erro.width / 2, Erro.yPos - Erro.height / 2, Erro.width, Erro.height);
+
 }
 
 // Função de atualização que chama a função correspondente à tela atual

@@ -218,6 +218,10 @@ void push(pilhaLetra *pilha, char letra){
 
     indiceSlot = tamanhoPilha;
     linhas[indiceLinha].letra[indiceSlot] = letra;
+    
+    if(coluna_atual < 5){
+        coluna_atual++;
+    }
 }
 
 void pop(pilhaLetra *pilha){
@@ -226,6 +230,8 @@ void pop(pilhaLetra *pilha){
     aux = pilha->topo;
     pilha->topo = aux->proximo;
     free(aux);
+
+    coluna_atual--;
 }
 
 char* pilhaParaString(pilhaLetra *pilha) {
@@ -384,7 +390,12 @@ void verificacao(const char* escolhida, pilhaLetra* pilha) {
             return;
         }
     } else {
-        printf("Palavra não encontrada\n\n");
+        printf("Palavra nao encontrada\n\n");
+
+        // Ativa a exibição do erro
+        mostrarErro = 1; // Sinaliza que o erro deve ser exibido
+        tempoErroInicio = glfwGetTime(); // Marca o início do tempo de exibição
+
         backspace(5);
 
         // Se a palavra não for encontrada, não decrementa as tentativas

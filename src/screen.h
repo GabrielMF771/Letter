@@ -36,11 +36,15 @@ typedef struct Linha{
 
 extern Linha linhas[MAX_LINHAS];
 extern int linha_atual;
+extern int coluna_atual;
 
 // Variáveis globais
 extern Tela telaAtual;
 extern int isInfiniteButtonClicked;
 extern int isStartButtonClicked;
+
+extern double tempoErroInicio;
+extern int mostrarErro;
 
 // Texturas - Menu
 extern GLuint startButtonTexture;
@@ -58,6 +62,7 @@ extern GLuint menuButtonTexture;
 extern GLuint slotCinzaTexture;
 extern GLuint slotVerdeTexture;
 extern GLuint slotAmareloTexture;
+extern GLuint slotAtualTexture;
 
 // Letras
 extern GLuint letraTexture;
@@ -97,6 +102,9 @@ extern GLuint fase4Texture;
 extern GLuint fase5Texture;
 extern GLuint fase6Texture;
 
+// Mensagens
+extern GLuint PalavraErroTexture;
+
 // Telas
 extern GLuint vitoriaTela;
 extern GLuint derrotaTela;
@@ -127,6 +135,7 @@ void atualizarOcorrencias();
 void desenharSlots();
 void desenharLetra(float x, float y, GLuint textura);
 void backspace();
+void desenharPalavraErro();
 
 void desenharVitoria();
 void desenharDerrota();

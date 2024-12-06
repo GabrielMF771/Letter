@@ -154,6 +154,7 @@ busca
 busco
 cabal
 caber
+cabos
 cacho
 caixa
 calao
@@ -296,7 +297,6 @@ doido
 dorso
 douto
 drama
-drops
 dubio
 ebano
 ebrio
@@ -390,9 +390,12 @@ fonte
 forca
 forem
 forma
+forno
 forro
 forte
 forum
+fosca
+fosco
 fossa
 fosse
 fosso
@@ -410,6 +413,7 @@ funde
 fundo
 fungo
 furor
+furto
 fusao
 futil
 gabar
@@ -693,6 +697,7 @@ pasmo
 passa
 passo
 pasta
+pasto
 patio
 pauta
 pavor
@@ -767,6 +772,7 @@ presa
 preso
 preto
 prime
+primo
 prive
 probo
 prole
@@ -952,6 +958,7 @@ tirar
 tiver
 toada
 tocar
+tocha
 todas
 todos
 tomar
@@ -976,6 +983,7 @@ troca
 troca
 troco
 troco
+tropa
 trupe
 tumba
 turba
